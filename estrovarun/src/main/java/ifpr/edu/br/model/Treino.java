@@ -2,7 +2,7 @@ package ifpr.edu.br.model;
 
 public class Treino {
     private int idTreino;
-    private int duracao;
+    private String duracao;
     private String tipo_treino;
     private String descricao;
     
@@ -17,11 +17,11 @@ public class Treino {
         this.idTreino = idTreino;
     }
 
-    public int getDuracao() {
+    public String getDuracao() {
         return duracao;
     }
 
-    public void setDuracao(int duracao) {
+    public void setDuracao(String duracao) {
         this.duracao = duracao;
     }
 

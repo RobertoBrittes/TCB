@@ -2,6 +2,7 @@ package ifpr.edu.br.model;
 import java.sql.Date;
 
 public class Treinador {
+    private String id;
     private String cref;
     private String nome;
     private String telefone;
@@ -49,5 +50,13 @@ public class Treinador {
 
     public void setData_nasc(Date data_nasc) {
         this.data_nasc = data_nasc;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

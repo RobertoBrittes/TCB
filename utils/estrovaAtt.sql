@@ -1,39 +1,57 @@
-DROP SCHEMA IF EXISTS estrovarun;
+DROP SCHEMA IF EXISTS estrovaRun;
 CREATE SCHEMA estrovaRun DEFAULT CHARACTER SET utf8;
 USE estrovaRun;
 
--- TREINADOR
-CREATE TABLE treinador (
-    treinador_id VARCHAR(45) PRIMARY KEY,
+-- ============================
+--  PESSOA (classe mãe)
+-- ============================
+CREATE TABLE pessoa (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     telefone VARCHAR(45) NOT NULL,
     email VARCHAR(100) NOT NULL,
     data_nasc DATE NOT NULL
 );
 
--- PLANO DE TREINO
+-- ============================
+--  TREINADOR (subclasse)
+-- ============================
+CREATE TABLE treinador (
+    id INT PRIMARY KEY,   -- mesmo id da tabela pessoa
+    cref VARCHAR(10) NOT NULL,
+    FOREIGN KEY (id) REFERENCES pessoa(id)
+);
+
+-- ============================
+--  ALUNO (subclasse)
+-- ============================
+CREATE TABLE aluno (
+    id INT PRIMARY KEY,   -- mesmo id da tabela pessoa
+    plano_id INT NULL,
+    FOREIGN KEY (id) REFERENCES pessoa(id)
+);
+
+-- ============================
+--  PLANO DE TREINO
+-- ============================
 CREATE TABLE plano_treino (
     id INT AUTO_INCREMENT PRIMARY KEY,
     dist_max_treino_longo FLOAT NOT NULL,
     duracao_plano INT NOT NULL,
     qtd_treino_semanal INT NOT NULL,
-    treinador_cref VARCHAR(45) NOT NULL,
+    treinador_id INT NOT NULL,
     is_ativo BOOLEAN NOT NULL,
-    FOREIGN KEY (treinador_cref) REFERENCES treinador(cref)
+    FOREIGN KEY (treinador_id) REFERENCES treinador(id)
 );
 
--- ALUNO
-CREATE TABLE aluno (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    telefone VARCHAR(45) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    data_nasc DATE NOT NULL,
-    plano_id INT NOT NULL,
-    FOREIGN KEY (plano_id) REFERENCES plano_treino(id)
-);
+-- aluno.aponta para plano_treino agora
+ALTER TABLE aluno
+    ADD CONSTRAINT fk_aluno_plano FOREIGN KEY (plano_id) 
+        REFERENCES plano_treino(id);
 
--- TREINO
+-- ============================
+--  TREINO
+-- ============================
 CREATE TABLE treino (
     id INT AUTO_INCREMENT PRIMARY KEY,
     duracao VARCHAR(45) NOT NULL,
@@ -41,7 +59,9 @@ CREATE TABLE treino (
     descricao VARCHAR(300) NOT NULL
 );
 
--- RELAÇÃO PLANO x TREINO (N:N)
+-- ============================
+--  PLANO x TREINO  (N:N)
+-- ============================
 CREATE TABLE plano_treino_tem_treino (
     id INT AUTO_INCREMENT PRIMARY KEY,
     plano_id INT NOT NULL,
@@ -52,23 +72,19 @@ CREATE TABLE plano_treino_tem_treino (
     FOREIGN KEY (treino_id) REFERENCES treino(id)
 );
 
+-- ============================
+--  USUÁRIO (para login)
+-- ============================
 CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(100) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
     tipo_usuario ENUM('aluno', 'treinador') NOT NULL,
-    aluno_id INT NULL,
-    treinador_id INT NULL,
+    pessoa_id INT NOT NULL,
 
-    CONSTRAINT fk_usuario_aluno
-        FOREIGN KEY (aluno_id) REFERENCES aluno(id),
+    FOREIGN KEY (pessoa_id) REFERENCES pessoa(id),
 
-    CONSTRAINT fk_usuario_treinador
-        FOREIGN KEY (treinador_id) REFERENCES treinador(id),
-
-    -- Garante que só UM dos dois será preenchido
-    CONSTRAINT chk_usuario_perfil CHECK (
-        (tipo_usuario = 'aluno' AND aluno_id IS NOT NULL AND treinador_id IS NULL) OR
-        (tipo_usuario = 'treinador' AND treinador_cref IS NOT NULL AND aluno_id IS NULL)
+    CHECK (
+        tipo_usuario IN ('aluno', 'treinador')
     )
 );

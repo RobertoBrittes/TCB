@@ -24,16 +24,16 @@ public class Plano_TreinoDAO {
             int treinador_id = 0;
             if (rs.next()) treinador_id = rs.getInt(1);
             
-            String sqlTreino = "INSERT INTO treino (duracao_plano, qtd_treino_semanal, dist_max_treino_longo, isAtivo) VALUES(?, ?, ?, ?)";
+            String sqlTreino = "INSERT INTO plano_treino (duracao_plano, qtd_treino_semanal, dist_max_treino_longo, isAtivo, treinador_id) VALUES(?, ?, ?, ?, ?)";
             
-            PreparedStatement psTreino = con.prepareStatement(sqlTreino);
-            psTreino.setInt(1, plano_treino.getDuracao_plano());
-            psTreino.setInt(2, plano_treino.getQtd_treino_semanal());
-            psTreino.setFloat(3, plano_treino.getDist_max_treino_longo());
-            psTreino.setBoolean(4, plano_treino.isAtivo());
-            psTreino.executeUpdate();
+            PreparedStatement psPlano_treino = con.prepareStatement(sqlTreino);
+            psPlano_treino.setInt(1, plano_treino.getDuracao_plano());
+            psPlano_treino.setInt(2, plano_treino.getQtd_treino_semanal());
+            psPlano_treino.setFloat(3, plano_treino.getDist_max_treino_longo());
+            psPlano_treino.setBoolean(4, plano_treino.isAtivo());
+            psPlano_treino.setInt(5, treinador_id);
+            psPlano_treino.executeUpdate();
 
-            if (rs.next()) 
         } catch (SQLException e) {
             e.printStackTrace();
         }

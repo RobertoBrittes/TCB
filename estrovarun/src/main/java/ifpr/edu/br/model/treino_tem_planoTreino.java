@@ -1,10 +1,10 @@
 package ifpr.edu.br.model;
 
-public class treino_has_planoTreino {
+public class treino_tem_planoTreino {
     private Treino treino;
     private Plano_treino plano_treino;
 
-    public treino_has_planoTreino() {
+    public treino_tem_planoTreino() {
     }
 
     public Treino getTreino() {

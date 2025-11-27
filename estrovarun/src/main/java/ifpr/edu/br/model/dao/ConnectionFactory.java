@@ -7,15 +7,16 @@ import java.sql.SQLException;
 public class ConnectionFactory {
     private static Connection conexao;
 
-    private ConnectionFactory(){}
+    private ConnectionFactory() {
+    }
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
         try {
-            if(conexao==null){
-                //jdbc:gdbd://ip do servidor do BD:porta/database
-                String url = "jdbc:mysql://localhost:3306/estrovaRun";
-                String user= "root";
-                String password="root";
+            if (conexao == null) {
+                // jdbc:gdbd://ip do servidor do BD:porta/database
+                String url = "jdbc:mysql://127.0.0.1:3306/estrovarun";
+                String user = "root";
+                String password = "saulo2009_";
                 conexao = DriverManager.getConnection(url, user, password);
                 System.out.println("conectado ao banco com sucesso!");
             }

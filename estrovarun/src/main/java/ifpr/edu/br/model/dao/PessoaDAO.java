@@ -4,18 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import ifpr.edu.br.model.Treinador;
+import ifpr.edu.br.model.Pessoa;
 
 public class PessoaDAO {
-    public int salvar(Treinador treinador) {
-        String sqlPessoa = "INSERT INTO pessoa (nome, telefone, email, data_nasc) VALUES (?, ?, ?, ?)";
+    public int salvar(Pessoa pessoa) {
+        String sqlPessoa = "INSERT INTO pessoa (nome, telefone, data_nasc) VALUES (?, ?, ?)";
         Connection con = ConnectionFactory.getConnection();
         try {
             PreparedStatement psPessoa = con.prepareStatement(sqlPessoa, PreparedStatement.RETURN_GENERATED_KEYS);
-            psPessoa.setString(1, treinador.getNome());
-            psPessoa.setString(2, treinador.getTelefone());
-            psPessoa.setString(3, treinador.getEmail());
-            psPessoa.setDate(4, treinador.getData_nasc());
+            psPessoa.setString(1, pessoa.getNome());
+            psPessoa.setString(2, pessoa.getTelefone());
+            psPessoa.setDate(3, java.sql.Date.valueOf(pessoa.getDataNasc()));
             psPessoa.executeUpdate();
 
             ResultSet rs = psPessoa.getGeneratedKeys();

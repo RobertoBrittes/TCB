@@ -7,6 +7,7 @@ public class Plano_treino {
     private int qtd_treino_semanal;
     private boolean isAtivo;
     private Treinador treinador;
+    private Aluno aluno;
     
     public Plano_treino() {
     }
@@ -57,5 +58,13 @@ public class Plano_treino {
 
     public void setTreinador(Treinador treinador) {
         this.treinador = treinador;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 }

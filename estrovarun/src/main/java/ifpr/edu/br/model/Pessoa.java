@@ -2,19 +2,18 @@ package ifpr.edu.br.model;
 
 import java.time.LocalDate;
 
-public abstract class Pessoa {
+public class Pessoa {
 
+    private int id;
     private String nome;
     private String telefone;
-    protected String email;
     protected LocalDate dataNasc;
 
     public Pessoa() {}
 
-    public Pessoa(String nome, String telefone, String email, LocalDate dataNasc) {
+    public Pessoa(String nome, String telefone, LocalDate dataNasc) {
         this.nome = nome;
         this.telefone = telefone;
-        this.email = email;
         this.dataNasc = dataNasc;
     }
 
@@ -33,20 +32,20 @@ public abstract class Pessoa {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    
     public LocalDate getDataNasc() {
         return dataNasc;
     }
 
     public void setDataNasc(LocalDate dataNasc) {
         this.dataNasc = dataNasc;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

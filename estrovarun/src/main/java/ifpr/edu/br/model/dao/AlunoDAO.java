@@ -7,18 +7,19 @@ import ifpr.edu.br.model.Aluno;
 
 public class AlunoDAO {
 
-    public void salvarAluno(Aluno aluno) {
-        String sqlAluno = "INSERT INTO aluno (nome, telefone, email, data_nasc) VALUES(?, ?, ?, ?)";
+    public void salvar(Aluno aluno) {
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        int idPessoa = pessoaDAO.salvar(aluno);
+        aluno.setId(idPessoa);
+        
+        String sqlAluno = "INSERT INTO aluno (id) VALUES(?)";
         Connection con = ConnectionFactory.getConnection();
         try {
             PreparedStatement psAluno = con.prepareStatement(sqlAluno);
-            psAluno.setString(1, aluno.getNome());
-            psAluno.setString(2, aluno.getTelefone());
-            psAluno.setString(3, aluno.getEmail());
-            psAluno.setDate(4, aluno.getData_nasc());
+            psAluno.setInt(1, aluno.getId());
             psAluno.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao salvar aluno: " + e.getMessage());
         }
     }
 }

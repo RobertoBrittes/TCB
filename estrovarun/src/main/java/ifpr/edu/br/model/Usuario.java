@@ -5,10 +5,17 @@ public class Usuario {
     private String email;
     private String senha;
     private String tipo_usuario;
-    private Aluno aluno;
-    private Treinador treinador;
+    private Pessoa pessoa;
 
     public Usuario() {
+    }
+
+    public Usuario(String email, String senha, String tipo_usuario, Pessoa pessoa) {
+        this.email = email;
+        this.senha = senha;
+        this.tipo_usuario = tipo_usuario;
+        this.pessoa = pessoa;
+        
     }
 
     public int getId() {
@@ -43,20 +50,14 @@ public class Usuario {
         this.tipo_usuario = tipo_usuario;
     }
 
-    public Aluno getAluno() {
-        return aluno;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
-    public Treinador getTreinador() {
-        return treinador;
-    }
 
-    public void setTreinador(Treinador treinador) {
-        this.treinador = treinador;
-    }
     
 }

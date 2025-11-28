@@ -17,7 +17,7 @@ public class TreinoDAO {
             psTreino.setString(3, treino.getDescricao());
             psTreino.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao salvar treino: " + e.getMessage());
         }
     }
 }

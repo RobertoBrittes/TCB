@@ -17,8 +17,8 @@ public class Plano_TreinoDAO {
             psTreinador.setString(1, plano_treino.getTreinador().getCref());
             psTreinador.setString(2, plano_treino.getTreinador().getNome());
             psTreinador.setString(3, plano_treino.getTreinador().getTelefone());
-            psTreinador.setString(4, plano_treino.getTreinador().getEmail());
-            psTreinador.setDate(5, plano_treino.getTreinador().getData_nasc());
+
+            psTreinador.setDate(5, java.sql.Date.valueOf(plano_treino.getTreinador().getDataNasc()));
 
             ResultSet rs = psTreinador.getGeneratedKeys();
             int treinador_id = 0;

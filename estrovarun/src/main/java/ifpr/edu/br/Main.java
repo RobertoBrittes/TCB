@@ -1,11 +1,9 @@
 package ifpr.edu.br;
 
-import ifpr.edu.br.controllers.TreinadorController;
-import ifpr.edu.br.controllers.AlunoController;
-import ifpr.edu.br.model.Aluno;
-import ifpr.edu.br.model.Treinador;
-
 import java.util.Scanner;
+
+import ifpr.edu.br.controllers.AlunoController;
+import ifpr.edu.br.controllers.TreinadorController;
 
 public class Main {
 
@@ -15,6 +13,7 @@ public class Main {
     public static Scanner SC = new Scanner(System.in);
 
     public static void main(String[] args) {
+        limparTerminal();
         imprimirCabecalho();
         switch (lerEscolha()) {
             case 1:
@@ -28,7 +27,7 @@ public class Main {
     }
 
     public static void efetuarCadastro() {
-        limpaTerminal();
+        limparTerminal();
         System.out.println("""
                  ██████╗ █████╗ ██████╗  █████╗ ███████╗████████╗██████╗  ██████╗
                 ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝╚══██╔══╝██╔══██╗██╔═══██╗
@@ -45,61 +44,65 @@ public class Main {
                 ██████╔╝███████╗    ╚██████╔╝███████║╚██████╔╝██║  ██║██║  ██║██║╚██████╔╝
                 ╚═════╝ ╚══════╝     ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝
                 """);
-        System.out.println("Digite seu nome:");
+        System.out.print("Digite seu nome: ");
         SC.nextLine();
         String nome = SC.nextLine();
+        System.out.println();
+        System.out.print("Digite sua data de nascimento (AAAA-MM-DD): ");
+        String dataNasc = SC.nextLine();
+        System.out.println();
         System.out.println("Você é um(a):");
         System.out.println("1 - Aluno");
         System.out.println("2 - Treinador");
         int tipoUsuario = lerEscolha();
-        System.out.println("");
-        System.out.println("Digite seu email:");
+        switch (tipoUsuario) {
+            case 1:     
+                SC.nextLine();
+                break;
+            default:
+                SC.nextLine();
+                System.out.println("Digite seu CREF:");
+                String cref = SC.nextLine();
+                break;
+        }
+        System.out.println();
+        System.out.print("Digite seu telefone: ");
+        String telefone = SC.nextLine();
+        System.out.println();
+        System.out.print("Digite seu email: ");
         String email = SC.nextLine();
-        System.out.println("Digite sua senha:");
+        System.out.println();
+        System.out.print("Digite sua senha:");
         String senha = SC.nextLine();
 
     }
 
     public static void imprimirCabecalho() {
-        System.out.println(
-                "                                                                                                                      \r\n"
-                        + //
-                        "                                                                                                                      \r\n"
-                        + //
-                        "    ,---,.              ___                                                      ,-.----.                             \r\n"
-                        + //
-                        "  ,'  .' |            ,--.'|_                                                    \\    /  \\                            \r\n"
-                        + //
-                        ",---.'   |            |  | :,'   __  ,-.   ,---.                                 ;   :    \\          ,--,      ,---,  \r\n"
-                        + //
-                        "|   |   .'  .--.--.   :  : ' : ,' ,'/ /|  '   ,'\\      .---.                     |   | .\\ :        ,'_ /|  ,-+-. /  | \r\n"
-                        + //
-                        ":   :  |-, /  /    '.;__,'  /  '  | |' | /   /   |   /.  ./|   ,--.--.           .   : |: |   .--. |  | : ,--.'|'   | \r\n"
-                        + //
-                        ":   |  ;/||  :  /`./|  |   |   |  |   ,'.   ; ,. : .-' . ' |  /       \\          |   |  \\ : ,'_ /| :  . ||   |  ,\"' | \r\n"
-                        + //
-                        "|   :   .'|  :  ;_  :__,'| :   '  :  /  '   | |: :/___/ \\: | .--.  .-. |         |   : .  / |  ' | |  . .|   | /  | | \r\n"
-                        + //
-                        "|   |  |-, \\  \\    `. '  : |__ |  | '   '   | .; :.   \\  ' .  \\__\\/: . .         ;   | |  \\ |  | ' |  | ||   | |  | | \r\n"
-                        + //
-                        "'   :  ;/|  `----.   \\|  | '.'|;  : |   |   :    | \\   \\   '  ,\" .--.; |         |   | ;\\  \\:  | : ;  ; ||   | |  |/  \r\n"
-                        + //
-                        "|   |    \\ /  /`--'  /;  :    ;|  , ;    \\   \\  /   \\   \\    /  /  ,.  |         :   ' | \\.''  :  `--'   \\   | |--'   \r\n"
-                        + //
-                        "|   :   .''--'.     / |  ,   /  ---'      `----'     \\   \\ |;  :   .'   \\        :   : :-'  :  ,      .-./   |/       \r\n"
-                        + //
-                        "|   | ,'    `--'---'   ---`-'                         '---\" |  ,     .-./        |   |.'     `--`----'   '---'        \r\n"
-                        + //
-                        "`----'                                                       `--`---'            `---'                                \r\n"
-                        + //
-                        "                                                                                                                      ");
+        System.out.println("""
+            ,----,                                                                                                
+          ,/   .`|              ,----..                                                                       ,--.
+,---,.  .--.--.      ,`   .'  :,-.----.     /   /   \\                 ,---,              ,-.----.                        ,--.'|
+,'  .' | /  /    '.  ;    ;     /\\    /  \\   /   .     :        ,---.  '  .' \\             \\    /  \\           ,--,    ,--,:  : |
+,---.'   ||  :  /`. /.'___,/    ,' ;   :    \\ .   /   ;.  \\      /__./| /  ;    '.           ;   :    \\        ,'_ /| ,`--.'`|  ' :
+|   |   .';  |  |--` |    :     |  |   | .\\ :.   ;   /  ` ; ,---.;  ; |:  :       \\          |   | .\\ :   .--. |  | : |   :  :  | |
+:   :  |-,|  :  ;_   ;    |.';  ;  .   : |: |;   |  ; \\ ; |/___/ \\  | |:  |   /\\   \\         .   : |: | ,'_ /| :  . | :   |   \\ | :
+:   |  ;/| \\  \\    `.`----'  |  |  |   |  \\ :|   :  | ; | '\\   ;  \\ ' ||  :  ' ;.   :        |   |  \\ : |  ' | |  . . |   : '  '; |
+|   :   .'  `----.   \\   '   :  ;  |   : .  /.   |  ' ' ' : \\   \\  \\: ||  |  ;/  \\   \\       |   : .  / |  | ' |  | | '   ' ;.    ;
+|   |  |-,  __ \\  \\  |   |   |  '  ;   | |  \\'   ;  \\; /  |  ;   \\  ' .'  :  | \\  \\ ,'       ;   | |  \\ :  | | :  ' ; |   | | \\   |
+'   :  ;/| /  /`--'  /   '   :  |  |   | ;\\  \\\\   \\  ',  /    \\   \\   '|  |  '  '--'         |   | ;\\  \\|  ; ' |  | ' '   : |  ; .'
+|   |    \\'--'.     /    ;   |.'   :   ' | \\.'' ;   :    /      \\   `  ;|  :  :               :   ' | \\.':  | : ;  ; | |   | '`--'  
+|   :   .'  `--'---'     '---'     :   : :-'    \\   \\ .'        :   \\ ||  | ,'               :   : :-'  '  :  `--'   \\'   : |      
+|   | ,'                           |   |.'       `---`           '---" `--''                 |   |.'    :  ,      .-./;   |.'      
+`----'                             `---'                                                     `---'       `--`----'    '---'         
+""");
+
         System.out.println("Olá, seja bem vindo ao Estrova Run\n");
         System.out.println("Escolha uma das opções abaixo:");
         System.out.println("1 - Cadastrar");
         System.out.println("2 - Login");
     }
 
-    public static void limpaTerminal() {
+    public static void limparTerminal() {
         for (int i = 0; i < 50; i++) {
             System.out.println();
         }

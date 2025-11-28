@@ -9,6 +9,8 @@ import ifpr.edu.br.model.Usuario;
 
 public class TreinadorController {
 
+    public static final String USER_TREINADOR = "TREINADOR";
+
     public void cadastrarTreinador(String nome, String telefone, LocalDate data_nasc, String cref, String email, String senha, String tipo_usuario) {
         TreinadorDAO treinadorDAO = new TreinadorDAO();
         UsuarioDAO usuarioDAO = new UsuarioDAO();

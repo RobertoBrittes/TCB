@@ -1,5 +1,6 @@
 package ifpr.edu.br;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import ifpr.edu.br.controllers.AlunoController;
@@ -49,7 +50,16 @@ public class Main {
         String nome = SC.nextLine();
         System.out.println();
         System.out.print("Digite sua data de nascimento (AAAA-MM-DD): ");
-        String dataNasc = SC.nextLine();
+        LocalDate dataNasc = java.time.LocalDate.parse(SC.nextLine());
+        System.out.println();
+        System.out.print("Digite seu telefone: ");
+        String telefone = SC.nextLine();
+        System.out.println();
+        System.out.print("Digite seu email: ");
+        String email = SC.nextLine();
+        System.out.println();
+        System.out.print("Crie sua senha:");
+        String senha = SC.nextLine();
         System.out.println();
         System.out.println("Você é um(a):");
         System.out.println("1 - Aluno");
@@ -58,22 +68,15 @@ public class Main {
         switch (tipoUsuario) {
             case 1:     
                 SC.nextLine();
+                alunoController.cadastrarAluno(nome, telefone, dataNasc, email, senha, AlunoController.USER_ALUNO);
                 break;
             default:
                 SC.nextLine();
                 System.out.println("Digite seu CREF:");
                 String cref = SC.nextLine();
+                treinadorController.cadastrarTreinador(nome, telefone, dataNasc, cref, email, senha, TreinadorController.USER_TREINADOR);
                 break;
         }
-        System.out.println();
-        System.out.print("Digite seu telefone: ");
-        String telefone = SC.nextLine();
-        System.out.println();
-        System.out.print("Digite seu email: ");
-        String email = SC.nextLine();
-        System.out.println();
-        System.out.print("Digite sua senha:");
-        String senha = SC.nextLine();
 
     }
 

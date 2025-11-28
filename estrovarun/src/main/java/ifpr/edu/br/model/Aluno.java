@@ -13,6 +13,10 @@ public class Aluno extends Pessoa {
         this.treinador = treinador;
     }
 
+    public Aluno(String nome, String telefone, LocalDate data_nasc) {
+        super(nome, telefone, data_nasc);
+    }
+
     public Treinador getTreinador() {
         return treinador;
     }

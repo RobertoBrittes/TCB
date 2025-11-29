@@ -5,25 +5,38 @@ import java.util.Scanner;
 
 import ifpr.edu.br.controllers.AlunoController;
 import ifpr.edu.br.controllers.TreinadorController;
+import ifpr.edu.br.controllers.LoginController;
+import ifpr.edu.br.model.TelaAluno;
+import ifpr.edu.br.model.Usuario;
+import ifpr.edu.br.model.dao.AlunoDAO;
+import ifpr.edu.br.model.dao.UsuarioDAO;
+import ifpr.edu.br.model.TelaTreinador;
 
 public class Main {
 
     static TreinadorController treinadorController = new TreinadorController();
     static AlunoController alunoController = new AlunoController();
+    static LoginController loginController = new LoginController();
+    static TelaAluno telaAluno = new TelaAluno();
+    static TelaTreinador telaTreinador = new TelaTreinador();
 
     public static Scanner SC = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        limparTerminal();
-        imprimirCabecalho();
-        switch (lerEscolha()) {
-            case 1:
-                efetuarCadastro();
-                break;
-
-            default:
-
-                break;
+    public static void main(String[] args) throws InterruptedException {
+        while (true) {
+            limparTerminal();
+            imprimirCabecalho();
+            switch (lerEscolha()) {
+                case 1:
+                    efetuarCadastro();
+                    break;
+                case 2:
+                    efetuarLogin();
+                    break;
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+            }
         }
     }
 
@@ -66,7 +79,7 @@ public class Main {
         System.out.println("2 - Treinador");
         int tipoUsuario = lerEscolha();
         switch (tipoUsuario) {
-            case 1:     
+            case 1:
                 SC.nextLine();
                 alunoController.cadastrarAluno(nome, telefone, dataNasc, email, senha, AlunoController.USER_ALUNO);
                 break;
@@ -74,30 +87,55 @@ public class Main {
                 SC.nextLine();
                 System.out.println("Digite seu CREF:");
                 String cref = SC.nextLine();
-                treinadorController.cadastrarTreinador(nome, telefone, dataNasc, cref, email, senha, TreinadorController.USER_TREINADOR);
+                treinadorController.cadastrarTreinador(nome, telefone, dataNasc, cref, email, senha,
+                        TreinadorController.USER_TREINADOR);
                 break;
         }
 
     }
 
+    public static void efetuarLogin() throws InterruptedException {
+        while (true) {
+            limparTerminal();
+            try {
+                System.out.print("Digite seu email: ");
+                String email = SC.nextLine();
+                System.out.print("Digite sua senha: ");
+                String senha = SC.nextLine();
+                Usuario usuarioLogado = loginController.efetuarLogin(email, senha);
+                Thread.sleep(2000);
+                if(usuarioLogado.getTipo_usuario().equalsIgnoreCase(AlunoController.USER_ALUNO)) {
+                    telaAluno.exibirTela(usuarioLogado);
+                } else {
+                    telaTreinador.exibirTela(usuarioLogado);
+                }
+                break;
+            } catch (Exception e) {
+                System.out.println("Erro ao efetuar login: " + e.getMessage());
+                Thread.sleep(2000);
+            }
+        }
+    }
+
     public static void imprimirCabecalho() {
-        System.out.println("""
-            ,----,                                                                                                
-          ,/   .`|              ,----..                                                                       ,--.
-,---,.  .--.--.      ,`   .'  :,-.----.     /   /   \\                 ,---,              ,-.----.                        ,--.'|
-,'  .' | /  /    '.  ;    ;     /\\    /  \\   /   .     :        ,---.  '  .' \\             \\    /  \\           ,--,    ,--,:  : |
-,---.'   ||  :  /`. /.'___,/    ,' ;   :    \\ .   /   ;.  \\      /__./| /  ;    '.           ;   :    \\        ,'_ /| ,`--.'`|  ' :
-|   |   .';  |  |--` |    :     |  |   | .\\ :.   ;   /  ` ; ,---.;  ; |:  :       \\          |   | .\\ :   .--. |  | : |   :  :  | |
-:   :  |-,|  :  ;_   ;    |.';  ;  .   : |: |;   |  ; \\ ; |/___/ \\  | |:  |   /\\   \\         .   : |: | ,'_ /| :  . | :   |   \\ | :
-:   |  ;/| \\  \\    `.`----'  |  |  |   |  \\ :|   :  | ; | '\\   ;  \\ ' ||  :  ' ;.   :        |   |  \\ : |  ' | |  . . |   : '  '; |
-|   :   .'  `----.   \\   '   :  ;  |   : .  /.   |  ' ' ' : \\   \\  \\: ||  |  ;/  \\   \\       |   : .  / |  | ' |  | | '   ' ;.    ;
-|   |  |-,  __ \\  \\  |   |   |  '  ;   | |  \\'   ;  \\; /  |  ;   \\  ' .'  :  | \\  \\ ,'       ;   | |  \\ :  | | :  ' ; |   | | \\   |
-'   :  ;/| /  /`--'  /   '   :  |  |   | ;\\  \\\\   \\  ',  /    \\   \\   '|  |  '  '--'         |   | ;\\  \\|  ; ' |  | ' '   : |  ; .'
-|   |    \\'--'.     /    ;   |.'   :   ' | \\.'' ;   :    /      \\   `  ;|  :  :               :   ' | \\.':  | : ;  ; | |   | '`--'  
-|   :   .'  `--'---'     '---'     :   : :-'    \\   \\ .'        :   \\ ||  | ,'               :   : :-'  '  :  `--'   \\'   : |      
-|   | ,'                           |   |.'       `---`           '---" `--''                 |   |.'    :  ,      .-./;   |.'      
-`----'                             `---'                                                     `---'       `--`----'    '---'         
-""");
+        System.out.println(
+                """
+                                    ,----,
+                                  ,/   .`|              ,----..                                                                       ,--.
+                        ,---,.  .--.--.      ,`   .'  :,-.----.     /   /   \\                 ,---,              ,-.----.                        ,--.'|
+                        ,'  .' | /  /    '.  ;    ;     /\\    /  \\   /   .     :        ,---.  '  .' \\             \\    /  \\           ,--,    ,--,:  : |
+                        ,---.'   ||  :  /`. /.'___,/    ,' ;   :    \\ .   /   ;.  \\      /__./| /  ;    '.           ;   :    \\        ,'_ /| ,`--.'`|  ' :
+                        |   |   .';  |  |--` |    :     |  |   | .\\ :.   ;   /  ` ; ,---.;  ; |:  :       \\          |   | .\\ :   .--. |  | : |   :  :  | |
+                        :   :  |-,|  :  ;_   ;    |.';  ;  .   : |: |;   |  ; \\ ; |/___/ \\  | |:  |   /\\   \\         .   : |: | ,'_ /| :  . | :   |   \\ | :
+                        :   |  ;/| \\  \\    `.`----'  |  |  |   |  \\ :|   :  | ; | '\\   ;  \\ ' ||  :  ' ;.   :        |   |  \\ : |  ' | |  . . |   : '  '; |
+                        |   :   .'  `----.   \\   '   :  ;  |   : .  /.   |  ' ' ' : \\   \\  \\: ||  |  ;/  \\   \\       |   : .  / |  | ' |  | | '   ' ;.    ;
+                        |   |  |-,  __ \\  \\  |   |   |  '  ;   | |  \\'   ;  \\; /  |  ;   \\  ' .'  :  | \\  \\ ,'       ;   | |  \\ :  | | :  ' ; |   | | \\   |
+                        '   :  ;/| /  /`--'  /   '   :  |  |   | ;\\  \\\\   \\  ',  /    \\   \\   '|  |  '  '--'         |   | ;\\  \\|  ; ' |  | ' '   : |  ; .'
+                        |   |    \\'--'.     /    ;   |.'   :   ' | \\.'' ;   :    /      \\   `  ;|  :  :               :   ' | \\.':  | : ;  ; | |   | '`--'
+                        |   :   .'  `--'---'     '---'     :   : :-'    \\   \\ .'        :   \\ ||  | ,'               :   : :-'  '  :  `--'   \\'   : |
+                        |   | ,'                           |   |.'       `---`           '---" `--''                 |   |.'    :  ,      .-./;   |.'
+                        `----'                             `---'                                                     `---'       `--`----'    '---'
+                        """);
 
         System.out.println("Olá, seja bem vindo ao Estrova Run\n");
         System.out.println("Escolha uma das opções abaixo:");
@@ -115,8 +153,8 @@ public class Main {
     public static int lerEscolha() {
         int escolha = 0;
         do {
-            escolha = SC.nextInt();
-        } while (escolha > 2 || escolha < 1);
+            escolha = Integer.parseInt(SC.nextLine());
+        } while (escolha > 2 || escolha < 0);
         return escolha;
     }
 

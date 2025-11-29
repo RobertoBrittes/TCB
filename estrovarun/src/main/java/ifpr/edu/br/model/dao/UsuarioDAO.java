@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import ifpr.edu.br.model.Usuario;
 import ifpr.edu.br.model.Aluno;
 import ifpr.edu.br.model.Pessoa;
+import ifpr.edu.br.model.Treinador;
 
 public class UsuarioDAO {
 
@@ -25,27 +26,36 @@ public class UsuarioDAO {
         }
     }
 
-    public Usuario login(String email, String senha) {
-        String sqlAluno = "SELECT pessoa.id, pessoa.nome, pessoa.telefone, pessoa.data_nasc, " +
-                          "aluno.treinador_id, usuario.email, usuario.senha, usuario.tipo_usuario " +
-                          "FROM pessoa " +
-                          "JOIN usuario ON usuario.pessoa_id = pessoa.id " +
-                          "JOIN aluno ON aluno.id = pessoa.id " +
-                          "WHERE usuario.email = ? AND usuario.senha = ?";
+    public Usuario fazerLogin(String email, String senha) { 
+        String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?";
         Connection con = ConnectionFactory.getConnection();
         try {
-            PreparedStatement ps = con.prepareStatement(sqlAluno);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, senha);
 
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Aluno
+            if (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setTipo_usuario(rs.getString("tipo_usuario"));
+                
+                if ("aluno".equalsIgnoreCase(usuario.getTipo_usuario())) {
+                    AlunoDAO alunoDAO = new AlunoDAO();
+                    Aluno aluno = alunoDAO.buscarPorId(rs.getInt("pessoa_id"));
+                    usuario.setPessoa(aluno);
+                } else {
+                    TreinadorDAO treinadorDAO = new TreinadorDAO();
+                    Treinador treinador = treinadorDAO.buscarPorId(rs.getInt("pessoa_id"));
+                    usuario.setPessoa(treinador);
+                }
+                return usuario;
             }
-        } catch (Exception e) {
-            // TODO: handle exception
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao fazer login: " + e.getMessage());
         }
-
     }
-
 }

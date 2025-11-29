@@ -26,4 +26,26 @@ public class PessoaDAO {
             throw new RuntimeException("Erro ao salvar pessoa: " + e.getMessage());
         }
     }
+
+    public Pessoa buscarPorId(int id) {
+        String sql = "SELECT * FROM pessoa WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                Pessoa pessoa = new Pessoa();
+                pessoa.setId(rs.getInt("id"));
+                pessoa.setNome(rs.getString("nome"));
+                pessoa.setTelefone(rs.getString("telefone"));
+                pessoa.setDataNasc(rs.getDate("data_nasc").toLocalDate());
+                return pessoa;
+            }
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar pessoa por ID: " + e.getMessage());
+        }
+    }
 }

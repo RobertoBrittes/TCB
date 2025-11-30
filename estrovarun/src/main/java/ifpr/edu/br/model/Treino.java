@@ -6,7 +6,8 @@ public class Treino {
     private String duracao;
     private String tipo_treino;
     private String descricao;
-    
+    private boolean isTreinoPronto;
+
     public Treino() {
     }
 
@@ -48,6 +49,14 @@ public class Treino {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isTreinoPronto() {
+        return isTreinoPronto;
+    }
+
+    public void setTreinoPronto(boolean isTreinoPronto) {
+        this.isTreinoPronto = isTreinoPronto;
     }
 
 }

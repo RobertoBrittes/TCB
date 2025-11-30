@@ -38,7 +38,11 @@ CREATE TABLE plano_treino (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT NOT NULL,
     treinador_id INT NOT NULL,
-    dist_max_treino_longo FLOAT NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    objetivo VARCHAR(100) NOT NULL,
+    descricao VARCHAR(300),
+    dataInicio DATE NOT NULL,
+    dataFim DATE NOT NULL,
     duracao_plano INT NOT NULL,
     qtd_treino_semanal INT NOT NULL,
     is_ativo BOOLEAN NOT NULL,
@@ -53,8 +57,9 @@ CREATE TABLE treino (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     duracao VARCHAR(45) NOT NULL,
-    tipo VARCHAR(45) NOT NULL,
-    descricao VARCHAR(300) NOT NULL
+    tipo ENUM('longão', 'regenerativo', 'tiro', 'fartlek', 'progressivo', 'rodagem') NOT NULL,
+    descricao VARCHAR(300) NOT 
+    isTreinoPronto BOOLEAN NOT NULL
 );
 
 -- ============================

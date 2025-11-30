@@ -9,7 +9,7 @@ import ifpr.edu.br.model.dao.Plano_TreinoDAO;
 import ifpr.edu.br.controllers.*;
 
 public class PlanoTreinoController {
-    public void criarPlanoTreino(Aluno aluno,Treinador treinador, String nome, String objetivo,
+    public Plano_treino criarPlanoTreino(Aluno aluno,Treinador treinador, String nome, String objetivo,
             String descricao, LocalDate dataInicio, int duracaoPlano, int qtdTreinoSemanal, boolean ativo) {
         
         Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
@@ -26,5 +26,11 @@ public class PlanoTreinoController {
         plano.setAtivo(ativo);
 
         plano_TreinoDAO.salvarPlano_treino(plano);
+        return plano;
+    }
+
+    public Plano_treino buscarPlanoTreinoPorId(int id) {
+        Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
+        return plano_TreinoDAO.buscarPlanoTreinoPorId(id);
     }
 }

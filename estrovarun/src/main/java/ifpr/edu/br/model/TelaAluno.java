@@ -25,6 +25,8 @@ public class TelaAluno {
             System.out.println("3 - Ver Perfil do Treinador");
             System.out.println("0 - Sair");
             switch (lerEscolha()) {
+                case 0:
+                    return;
                 case 1:
                     verPerfil(usuario);
                     break;
@@ -35,6 +37,7 @@ public class TelaAluno {
                     verPerfilTreinador(usuario);
                     break;
                 default:
+
                     break;
             }
         }

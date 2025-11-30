@@ -1,11 +1,11 @@
 package ifpr.edu.br.model;
 
-public class TreinoPlano {
+public class TreinoTemPlano {
     private Treino treino;
     private Plano_treino plano_treino;
     private String diaSemana;
 
-    public TreinoPlano() {
+    public TreinoTemPlano() {
     }
 
     public Treino getTreino() {

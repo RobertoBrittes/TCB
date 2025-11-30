@@ -33,6 +33,15 @@ public class TreinadorController {
         throw new RuntimeException("Treinador não encontrado com o email fornecido.");
     }
 
+    public Treinador buscarPorId(int id) {
+        TreinadorDAO treinadorDAO = new TreinadorDAO();
+        Treinador treinador = treinadorDAO.buscarPorId(id);
+        if (treinador != null) {
+            return treinador;
+        }
+        throw new RuntimeException("Treinador não encontrado com o ID fornecido.");
+    }
+
     public void listarAlunos(int treinadorId) {
         TreinadorDAO treinadorDAO = new TreinadorDAO();
         ArrayList<Pessoa> alunos = treinadorDAO.listarAlunos(treinadorId);

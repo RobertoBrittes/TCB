@@ -1,15 +1,16 @@
 package ifpr.edu.br.model.dao;
 
 import ifpr.edu.br.model.Treino;
-import ifpr.edu.br.model.TreinoPlano;
+import ifpr.edu.br.model.TreinoTemPlano;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import ifpr.edu.br.controllers.*;
 
 
-public class TreinoPlanoDAO {
-    public void adicionarTreinoAoPlano(TreinoPlano treinoPlano) {
+public class TreinoTemPlanoDAO {
+    public void adicionarTreinoAoPlano(TreinoTemPlano treinoPlano) {
         String sql = "INSERT INTO treino_plano (treino_id, plano_treino_id, dia_semana) VALUES (?, ?, ?)";
         Connection con = ConnectionFactory.getConnection();
         try {
@@ -24,7 +25,9 @@ public class TreinoPlanoDAO {
 
     }
 
-    public TreinoPlano verificarDiaDaSemana(String diaSemana) {
+    public TreinoTemPlano verificarDiaDaSemana(String diaSemana) {
+        TreinoController treinoController = new TreinoController();
+        PlanoTreinoController planoTreinoController = new PlanoTreinoController();
         String sql = "SELECT * FROM plano_treino_tem_treino WHERE dia_semana = ?";
         Connection con = ConnectionFactory.getConnection();
         try {
@@ -33,12 +36,15 @@ public class TreinoPlanoDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                TreinoPlano treinoPlano = new TreinoPlano();
-                
+                TreinoTemPlano treinoPlano = new TreinoTemPlano();
+                treinoPlano.setTreino(treinoController.buscarTreinoPorId(rs.getInt("treino_id")));
+                treinoPlano.setPlano_treino(planoTreinoController.buscarPlanoTreinoPorId(rs.getInt("plano_id")));
+                treinoPlano.setDiaSemana(rs.getString("dia_semana"));
+                return treinoPlano;
             }
-
+            return null;
         } catch (Exception e) {
-            // TODO: handle exception
+            throw new RuntimeException("Erro ao verificar dia da semana: " + e.getMessage());
         }
     }
 }

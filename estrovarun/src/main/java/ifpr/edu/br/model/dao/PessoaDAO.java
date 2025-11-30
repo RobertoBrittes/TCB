@@ -3,6 +3,7 @@ package ifpr.edu.br.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import ifpr.edu.br.model.Pessoa;
 
@@ -24,6 +25,32 @@ public class PessoaDAO {
             return -1;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar pessoa: " + e.getMessage());
+        }
+    }
+
+    public void atualizarTelefone(int pessoaId, String novoTelefone) {
+        String sql = "UPDATE pessoa SET telefone = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novoTelefone);
+            ps.setInt(2, pessoaId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar telefone: " + e.getMessage());
+        }
+    }
+
+    public void atualizarNome(int pessoaId, String novoNome) {
+        String sql = "UPDATE pessoa SET nome = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novoNome);
+            ps.setInt(2, pessoaId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar nome: " + e.getMessage());
         }
     }
 

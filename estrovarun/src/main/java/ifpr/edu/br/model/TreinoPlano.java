@@ -1,10 +1,11 @@
 package ifpr.edu.br.model;
 
-public class treino_tem_planoTreino {
+public class TreinoPlano {
     private Treino treino;
     private Plano_treino plano_treino;
+    private String diaSemana;
 
-    public treino_tem_planoTreino() {
+    public TreinoPlano() {
     }
 
     public Treino getTreino() {
@@ -21,6 +22,14 @@ public class treino_tem_planoTreino {
 
     public void setPlano_treino(Plano_treino plano_treino) {
         this.plano_treino = plano_treino;
+    }
+
+    public String getDiaSemana() {
+        return diaSemana;
+    }
+
+    public void setDiaSemana(String diaSemana) {
+        this.diaSemana = diaSemana;
     }
 
     

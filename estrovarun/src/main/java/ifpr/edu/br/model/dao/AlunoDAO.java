@@ -63,6 +63,19 @@ public class AlunoDAO {
         }
     }
 
+    public void atualizarTreinador(int alunoId, int treinadorId) { 
+        String sql = "UPDATE aluno SET treinador_id = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, treinadorId);
+            ps.setInt(2, alunoId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar treinador do aluno: " + e.getMessage());
+        }
+    }
+
     public Usuario login(String email, String senha) {
         String sqlAluno = "SELECT pessoa.id, pessoa.nome, pessoa.telefone, pessoa.data_nasc, " +
                           "aluno.treinador_id, usuario.email, usuario.senha, usuario.tipo_usuario " +

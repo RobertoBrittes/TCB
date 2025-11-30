@@ -59,7 +59,6 @@ public class Main {
                 ╚═════╝ ╚══════╝     ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝
                 """);
         System.out.print("Digite seu nome: ");
-        SC.nextLine();
         String nome = SC.nextLine();
         System.out.println();
         System.out.print("Digite sua data de nascimento (AAAA-MM-DD): ");
@@ -80,11 +79,9 @@ public class Main {
         int tipoUsuario = lerEscolha();
         switch (tipoUsuario) {
             case 1:
-                SC.nextLine();
                 alunoController.cadastrarAluno(nome, telefone, dataNasc, email, senha, AlunoController.USER_ALUNO);
                 break;
             default:
-                SC.nextLine();
                 System.out.println("Digite seu CREF:");
                 String cref = SC.nextLine();
                 treinadorController.cadastrarTreinador(nome, telefone, dataNasc, cref, email, senha,

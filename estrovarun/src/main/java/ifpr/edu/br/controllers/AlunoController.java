@@ -22,4 +22,32 @@ public class AlunoController {
         Usuario usuario = new Usuario(email, senha, tipo_usuario, aluno);
         usuarioDAO.salvar(usuario);
     }
+
+    public Aluno atribuirTreinador(int alunoId, String emailTreinador) {
+        if (emailTreinador == null || emailTreinador.isBlank()) {
+            throw new RuntimeException("O email do treinador não pode ser nulo ou vazio.");
+        }
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Usuario treinador = usuarioDAO.buscarPorEmail(emailTreinador);
+        if (treinador == null || !"TREINADOR".equalsIgnoreCase(treinador.getTipo_usuario())) {
+            throw new RuntimeException("Treinador não encontrado com o email fornecido.");
+        }
+        AlunoDAO alunoDAO = new AlunoDAO();
+        alunoDAO.atualizarTreinador(alunoId, treinador.getPessoa().getId());
+
+        //retorna o aluno ja atualizado
+        return alunoDAO.buscarPorId(alunoId);
+    }
+
+    public Aluno buscarPorId(int alunoId) {
+        AlunoDAO alunoDAO = new AlunoDAO();
+        Aluno aluno = alunoDAO.buscarPorId(alunoId);
+
+        if (aluno == null) {
+            throw new RuntimeException("Aluno não encontrado com o ID fornecido.");
+        }
+
+        return aluno;
+    }
 }

@@ -8,7 +8,6 @@ import ifpr.edu.br.model.Aluno;
 import ifpr.edu.br.model.Treinador;
 import ifpr.edu.br.model.Usuario;
 import ifpr.edu.br.model.Pessoa;
-import ifpr.edu.br.model.dao.TreinadorDAO;
 
 public class AlunoDAO {
 

@@ -1,6 +1,5 @@
 package ifpr.edu.br.model.dao;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -96,6 +95,18 @@ public class TreinadorDAO {
             return alunos;
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao listar alunos do treinador: " + e.getMessage());
+        }
+    }
+
+    public void removerAluno(int alunoId) {
+        String sql = "UPDATE aluno SET treinador_id = NULL WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, alunoId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao remover aluno do treinador: " + e.getMessage());
         }
     }
 }

@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import ifpr.edu.br.model.Aluno;
 import ifpr.edu.br.model.Plano_treino;
 import ifpr.edu.br.controllers.*;
 
@@ -78,6 +76,33 @@ public class Plano_TreinoDAO {
             return null;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao buscar plano de treino por ID: " + e.getMessage());
+        }
+    }
+
+    public Plano_treino buscarPlanoTreinoAtivo(int alunoId) {
+        String sql = "SELECT * FROM plano_treino WHERE aluno_id = ? AND is_ativo = TRUE";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, alunoId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Plano_treino plano = new Plano_treino();
+                plano.setIdplano_treino(rs.getInt("id"));
+                plano.setNome(rs.getString("nome"));
+                plano.setObjetivo(rs.getString("objetivo"));
+                plano.setDescricao(rs.getString("descricao"));
+                plano.setDataInicio(rs.getObject("dataInicio", java.time.LocalDate.class));
+                plano.setDataFim(rs.getObject("dataFim", java.time.LocalDate.class));
+                plano.setDuracao_plano(rs.getInt("duracao_plano"));
+                plano.setQtd_treino_semanal(rs.getInt("qtd_treino_semanal"));
+                plano.setAtivo(rs.getBoolean("is_ativo"));
+                return plano;
+            }
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao visualizar plano de treino ativo: " + e.getMessage());
         }
     }
 }

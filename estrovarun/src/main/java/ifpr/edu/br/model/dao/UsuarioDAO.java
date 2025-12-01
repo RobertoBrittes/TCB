@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import ifpr.edu.br.model.Usuario;
 import ifpr.edu.br.model.Aluno;
-import ifpr.edu.br.model.Pessoa;
 import ifpr.edu.br.model.Treinador;
 
 public class UsuarioDAO {

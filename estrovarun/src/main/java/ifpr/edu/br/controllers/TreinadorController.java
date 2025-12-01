@@ -8,6 +8,7 @@ import ifpr.edu.br.model.dao.UsuarioDAO;
 import ifpr.edu.br.model.Treinador;
 import ifpr.edu.br.model.Usuario;
 import ifpr.edu.br.model.Pessoa;
+import ifpr.edu.br.model.Aluno;
 
 public class TreinadorController {
 
@@ -45,8 +46,27 @@ public class TreinadorController {
     public void listarAlunos(int treinadorId) {
         TreinadorDAO treinadorDAO = new TreinadorDAO();
         ArrayList<Pessoa> alunos = treinadorDAO.listarAlunos(treinadorId);
-        for (Pessoa aluno : alunos) {
-            System.out.println("ID: " + aluno.getId() + ", Nome: " + aluno.getNome());
+
+        if (alunos.isEmpty()) {
+            System.out.println("Nenhum aluno encontrado.");
+        } else {
+            for (Pessoa aluno : alunos) {
+                System.out.println("ID: " + aluno.getId() + ", Nome: " + aluno.getNome() + ", Email: " + aluno.getTelefone());
+            }
         }
+    }
+
+    public void removerAluno(int alunoId, int treinadorId) {
+        Aluno aluno = new AlunoController().buscarPorId(alunoId);
+        
+        if (aluno == null) throw new RuntimeException("Aluno não encontrado.");
+        
+        if (new AlunoController().buscarPorId(alunoId).getTreinador().getId() != treinadorId) {
+            throw new RuntimeException("Você não pode remover um aluno que não é seu.");
+        }
+
+        new TreinadorDAO().removerAluno(alunoId);
+
+        System.out.println("Aluno removido com sucesso.");
     }
 }

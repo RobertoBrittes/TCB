@@ -6,7 +6,6 @@ import ifpr.edu.br.model.Aluno;
 import ifpr.edu.br.model.Plano_treino;
 import ifpr.edu.br.model.Treinador;
 import ifpr.edu.br.model.dao.Plano_TreinoDAO;
-import ifpr.edu.br.controllers.*;
 
 public class PlanoTreinoController {
     public Plano_treino criarPlanoTreino(Aluno aluno,Treinador treinador, String nome, String objetivo,
@@ -33,5 +32,10 @@ public class PlanoTreinoController {
     public Plano_treino buscarPlanoTreinoPorId(int id) {
         Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
         return plano_TreinoDAO.buscarPlanoTreinoPorId(id);
+    }
+    
+    public Plano_treino buscarPlanoTreinoAtivo(int alunoId) {
+        Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
+        return plano_TreinoDAO.buscarPlanoTreinoAtivo(alunoId);
     }
 }

@@ -1,11 +1,11 @@
 package ifpr.edu.br.model.dao;
 
-import ifpr.edu.br.model.Treino;
 import ifpr.edu.br.model.TreinoTemPlano;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import ifpr.edu.br.controllers.*;
 
 
@@ -25,14 +25,15 @@ public class TreinoTemPlanoDAO {
 
     }
 
-    public TreinoTemPlano verificarDiaDaSemana(String diaSemana) {
+    public TreinoTemPlano verificarDiaDaSemana(String diaSemana, int planoId) {
         TreinoController treinoController = new TreinoController();
         PlanoTreinoController planoTreinoController = new PlanoTreinoController();
-        String sql = "SELECT * FROM plano_treino_tem_treino WHERE dia_semana = ?";
+        String sql = "SELECT * FROM plano_treino_tem_treino WHERE dia_semana = ? AND plano_id = ?";
         Connection con = ConnectionFactory.getConnection();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, diaSemana);
+            ps.setInt(2, planoId);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -45,6 +46,30 @@ public class TreinoTemPlanoDAO {
             return null;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao verificar dia da semana: " + e.getMessage());
+        }
+    }
+
+    public ArrayList<TreinoTemPlano> listarTreinosDoPlano(int planoId) {
+        TreinoController treinoController = new TreinoController();
+        PlanoTreinoController planoTreinoController = new PlanoTreinoController();
+        String sql = "SELECT * FROM plano_treino_tem_treino WHERE plano_id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        ArrayList<TreinoTemPlano> treinosNoPlano = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, planoId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                TreinoTemPlano treinoPlano = new TreinoTemPlano();
+                treinoPlano.setTreino(treinoController.buscarTreinoPorId(rs.getInt("treino_id")));
+                treinoPlano.setPlano_treino(planoTreinoController.buscarPlanoTreinoPorId(rs.getInt("plano_id")));
+                treinoPlano.setDiaSemana(rs.getString("dia_semana"));
+                treinosNoPlano.add(treinoPlano);
+            }
+            return treinosNoPlano;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao listar treinos do plano: " + e.getMessage());
         }
     }
 }

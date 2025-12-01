@@ -4,13 +4,11 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import ifpr.edu.br.controllers.AlunoController;
-import ifpr.edu.br.controllers.TreinadorController;
 import ifpr.edu.br.controllers.LoginController;
+import ifpr.edu.br.controllers.TreinadorController;
 import ifpr.edu.br.model.TelaAluno;
-import ifpr.edu.br.model.Usuario;
-import ifpr.edu.br.model.dao.AlunoDAO;
-import ifpr.edu.br.model.dao.UsuarioDAO;
 import ifpr.edu.br.model.TelaTreinador;
+import ifpr.edu.br.model.Usuario;
 
 public class Main {
 
@@ -117,24 +115,10 @@ public class Main {
     }
 
     public static void imprimirCabecalho() {
-        System.out.println(
-                """
-                                    ,----,
-                                  ,/   .`|              ,----..                                                                       ,--.
-                        ,---,.  .--.--.      ,`   .'  :,-.----.     /   /   \\                 ,---,              ,-.----.                        ,--.'|
-                        ,'  .' | /  /    '.  ;    ;     /\\    /  \\   /   .     :        ,---.  '  .' \\             \\    /  \\           ,--,    ,--,:  : |
-                        ,---.'   ||  :  /`. /.'___,/    ,' ;   :    \\ .   /   ;.  \\      /__./| /  ;    '.           ;   :    \\        ,'_ /| ,`--.'`|  ' :
-                        |   |   .';  |  |--` |    :     |  |   | .\\ :.   ;   /  ` ; ,---.;  ; |:  :       \\          |   | .\\ :   .--. |  | : |   :  :  | |
-                        :   :  |-,|  :  ;_   ;    |.';  ;  .   : |: |;   |  ; \\ ; |/___/ \\  | |:  |   /\\   \\         .   : |: | ,'_ /| :  . | :   |   \\ | :
-                        :   |  ;/| \\  \\    `.`----'  |  |  |   |  \\ :|   :  | ; | '\\   ;  \\ ' ||  :  ' ;.   :        |   |  \\ : |  ' | |  . . |   : '  '; |
-                        |   :   .'  `----.   \\   '   :  ;  |   : .  /.   |  ' ' ' : \\   \\  \\: ||  |  ;/  \\   \\       |   : .  / |  | ' |  | | '   ' ;.    ;
-                        |   |  |-,  __ \\  \\  |   |   |  '  ;   | |  \\'   ;  \\; /  |  ;   \\  ' .'  :  | \\  \\ ,'       ;   | |  \\ :  | | :  ' ; |   | | \\   |
-                        '   :  ;/| /  /`--'  /   '   :  |  |   | ;\\  \\\\   \\  ',  /    \\   \\   '|  |  '  '--'         |   | ;\\  \\|  ; ' |  | ' '   : |  ; .'
-                        |   |    \\'--'.     /    ;   |.'   :   ' | \\.'' ;   :    /      \\   `  ;|  :  :               :   ' | \\.':  | : ;  ; | |   | '`--'
-                        |   :   .'  `--'---'     '---'     :   : :-'    \\   \\ .'        :   \\ ||  | ,'               :   : :-'  '  :  `--'   \\'   : |
-                        |   | ,'                           |   |.'       `---`           '---" `--''                 |   |.'    :  ,      .-./;   |.'
-                        `----'                             `---'                                                     `---'       `--`----'    '---'
-                        """);
+        System.out.println("   _________________  ____ _   _____       ___  __  ___  __\r\n" + //
+                        "  / __/ __/_  __/ _ \\/ __ \\ | / / _ |     / _ \\/ / / / |/ /\r\n" + //
+                        " / _/_\\ \\  / / / , _/ /_/ / |/ / __ |    / , _/ /_/ /    / \r\n" + //
+                        "/___/___/ /_/ /_/|_|\\____/|___/_/ |_|   /_/|_|\\____/_/|_/  \r\n" );
 
         System.out.println("Olá, seja bem vindo ao Estrova Run\n");
         System.out.println("Escolha uma das opções abaixo:");

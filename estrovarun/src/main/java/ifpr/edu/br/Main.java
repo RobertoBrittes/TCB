@@ -94,22 +94,23 @@ public class Main {
     public static void efetuarLogin() throws InterruptedException {
         while (true) {
             limparTerminal();
+            Usuario usuarioLogado = null;
             try {
                 System.out.print("Digite seu email: ");
                 String email = SC.nextLine();
                 System.out.print("Digite sua senha: ");
                 String senha = SC.nextLine();
-                Usuario usuarioLogado = loginController.efetuarLogin(email, senha);
+                usuarioLogado = loginController.efetuarLogin(email, senha);
                 Thread.sleep(2000);
-                if(usuarioLogado.getTipo_usuario().equalsIgnoreCase(AlunoController.USER_ALUNO)) {
-                    telaAluno.exibirTela(usuarioLogado);
-                } else {
-                    telaTreinador.exibirTela(usuarioLogado);
-                }
                 break;
             } catch (Exception e) {
                 System.out.println("Erro ao efetuar login: " + e.getMessage());
                 Thread.sleep(2000);
+            }
+            if(usuarioLogado.getTipo_usuario().equalsIgnoreCase(AlunoController.USER_ALUNO)) {
+                telaAluno.exibirTela(usuarioLogado);
+            } else {
+                telaTreinador.exibirTela(usuarioLogado);
             }
         }
     }

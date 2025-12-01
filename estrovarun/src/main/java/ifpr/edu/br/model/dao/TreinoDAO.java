@@ -5,14 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import ifpr.edu.br.model.Treino;
-import java.util.ArrayList;;
+import java.util.ArrayList;
+import java.sql.Statement;
 
 public class TreinoDAO {
-    public void salvarTreino(Treino treino) {
+    public int salvarTreino(Treino treino) {
         Connection con = ConnectionFactory.getConnection();
         String sql = "INSERT INTO treino (nome, duracao, tipo, descricao, isTreinoPronto) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, treino.getNome());
             ps.setString(2, treino.getDuracao());
             ps.setString(3, treino.getTipo_treino());
@@ -20,6 +21,12 @@ public class TreinoDAO {
             ps.setBoolean(5, treino.isTreinoPronto());
 
             ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return -1;
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar treino: " + e.getMessage());
         }

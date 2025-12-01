@@ -42,7 +42,7 @@ CREATE TABLE plano_treino (
     objetivo VARCHAR(100) NOT NULL,
     descricao VARCHAR(300),
     dataInicio DATE NOT NULL,
-    dataFim DATE NOT NULL,
+    dataFim DATE,
     duracao_plano INT NOT NULL,
     qtd_treino_semanal INT NOT NULL,
     is_ativo BOOLEAN NOT NULL,
@@ -66,9 +66,9 @@ CREATE TABLE treino (
 --  RELAÇÃO PLANO x TREINO  (N:N)
 -- ============================
 CREATE TABLE plano_treino_tem_treino (
-    id INT AUTO_INCREMENT PRIMARY KEY,
     plano_id INT NOT NULL,
     treino_id INT NOT NULL,
+    PRIMARY KEY(plano_id, treino_id),
     dia_semana ENUM('segunda','terca','quarta','quinta','sexta','sabado','domingo') NOT NULL,
     UNIQUE (plano_id, dia_semana),
     FOREIGN KEY (plano_id) REFERENCES plano_treino(id) ON DELETE CASCADE,

@@ -102,15 +102,16 @@ public class Main {
                 String senha = SC.nextLine();
                 usuarioLogado = loginController.efetuarLogin(email, senha);
                 Thread.sleep(2000);
-                break;
             } catch (Exception e) {
                 System.out.println("Erro ao efetuar login: " + e.getMessage());
                 Thread.sleep(2000);
             }
             if(usuarioLogado.getTipo_usuario().equalsIgnoreCase(AlunoController.USER_ALUNO)) {
                 telaAluno.exibirTela(usuarioLogado);
-            } else {
+                break;
+            } else if (usuarioLogado.getTipo_usuario().equalsIgnoreCase(TreinadorController.USER_TREINADOR)) {
                 telaTreinador.exibirTela(usuarioLogado);
+                break;
             }
         }
     }

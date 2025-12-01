@@ -11,9 +11,9 @@ import ifpr.edu.br.model.Plano_treino;
 import ifpr.edu.br.controllers.*;
 
 public class Plano_TreinoDAO {
-    public void salvarPlano_treino(Plano_treino plano_treino) {
+    public int salvarPlano_treino(Plano_treino plano_treino) {
         Connection con = ConnectionFactory.getConnection();
-        String sql = "INSERT INTO plano_treino (aluno_id, treinador_id, nome, objetivo, descricao, dataInicio, dataFim, duracao_plano, qtd_treino_semanal, is_ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO plano_treino (aluno_id, treinador_id, nome, objetivo, descricao, dataInicio, duracao_plano, qtd_treino_semanal, is_ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, plano_treino.getAluno().getId());
             ps.setInt(2, plano_treino.getTreinador().getId());
@@ -21,12 +21,17 @@ public class Plano_TreinoDAO {
             ps.setString(4, plano_treino.getObjetivo());
             ps.setString(5, plano_treino.getDescricao());
             ps.setObject(6, plano_treino.getDataInicio());
-            ps.setObject(7, plano_treino.getDataFim());
-            ps.setInt(8, plano_treino.getDuracao_plano());
-            ps.setInt(9, plano_treino.getQtd_treino_semanal());
-            ps.setBoolean(10, plano_treino.isAtivo());
+            ps.setInt(7, plano_treino.getDuracao_plano());
+            ps.setInt(8, plano_treino.getQtd_treino_semanal());
+            ps.setBoolean(9, plano_treino.isAtivo());
 
             ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return -1;
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar plano de treino: " + e.getMessage());
         }

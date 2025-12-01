@@ -246,7 +246,8 @@ public class TelaTreinador {
                     System.out.println("Descrição do Treino: ");
                     novoTreino.setDescricao(SC.nextLine());
                     novoTreino.setTreinoPronto(false);
-                    novoTreino = new TreinoController().salvarTreino(novoTreino);
+                    int novoTreinoId = new TreinoController().salvarTreino(novoTreino);
+                    novoTreino.setIdTreino(novoTreinoId);
                     TreinoTemPlano novoTreinoPlano = new TreinoTemPlano();
                     novoTreinoPlano.setDiaSemana(diaSemana);
                     novoTreinoPlano.setPlano_treino(plano);
@@ -259,25 +260,24 @@ public class TelaTreinador {
         }
     }
         
-        
     }
 
     private static String escolherDiaSemana() {
         switch (lerEscolha()) {
                 case 1:
-                    return "Domingo";
+                    return "domingo";
                 case 2:
-                    return "Segunda-feira";
+                    return "segunda";
                 case 3:
-                    return "Terça-feira";
+                    return "terca";
                 case 4:
-                    return "Quarta-feira";
+                    return "quarta";
                 case 5:
-                    return "Quinta-feira";
+                    return "quinta";
                 case 6:
-                    return "Sexta-feira";
+                    return "sexta";
                 case 7:
-                    return "Sábado";
+                    return "sabado";
                 default:
                     throw new RuntimeException("Escolha inválida.");
             }

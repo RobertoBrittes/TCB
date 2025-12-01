@@ -23,13 +23,12 @@ public class TreinoController {
         }
     }
 
-    public Treino salvarTreino(Treino treino) {
+    public int salvarTreino(Treino treino) {
         if (treino == null) {
             throw new RuntimeException("Treino não pode ser nulo.");
         }
 
         TreinoDAO treinoDAO = new TreinoDAO();
-        treinoDAO.salvarTreino(treino);
-        return treino;
+        return treinoDAO.salvarTreino(treino);
     }
 }

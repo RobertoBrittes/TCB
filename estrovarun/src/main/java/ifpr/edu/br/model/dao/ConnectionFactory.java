@@ -14,9 +14,9 @@ public class ConnectionFactory {
         try {
             if (conexao == null) {
                 // jdbc:gdbd://ip do servidor do BD:porta/database
-                String url = "jdbc:mysql://127.0.0.1:3306/estrovarun";
-                String user = "root";
-                String password = "saulo2009_";
+                String url = "jdbc:mysql://127.0.0.1:3306/estrovaRun";
+                String user = "aluno";
+                String password = "aluno";
                 conexao = DriverManager.getConnection(url, user, password);
             }
         } catch (SQLException e) {

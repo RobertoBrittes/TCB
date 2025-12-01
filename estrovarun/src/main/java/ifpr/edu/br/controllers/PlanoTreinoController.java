@@ -25,7 +25,8 @@ public class PlanoTreinoController {
         plano.setQtd_treino_semanal(qtdTreinoSemanal);
         plano.setAtivo(ativo);
 
-        plano_TreinoDAO.salvarPlano_treino(plano);
+        int planoId = plano_TreinoDAO.salvarPlano_treino(plano);
+        plano.setIdplano_treino(planoId);
         return plano;
     }
 

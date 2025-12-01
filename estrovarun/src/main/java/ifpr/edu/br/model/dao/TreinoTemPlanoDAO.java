@@ -11,7 +11,7 @@ import ifpr.edu.br.controllers.*;
 
 public class TreinoTemPlanoDAO {
     public void adicionarTreinoAoPlano(TreinoTemPlano treinoPlano) {
-        String sql = "INSERT INTO treino_plano (treino_id, plano_treino_id, dia_semana) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO plano_treino_tem_treino (treino_id, plano_id, dia_semana) VALUES (?, ?, ?)";
         Connection con = ConnectionFactory.getConnection();
         try {
             PreparedStatement ps = con.prepareStatement(sql);

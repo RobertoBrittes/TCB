@@ -7,6 +7,7 @@ public class Pessoa {
     private int id;
     private String nome;
     private String telefone;
+    private String email;
     protected LocalDate dataNasc;
 
     public Pessoa() {}
@@ -48,4 +49,9 @@ public class Pessoa {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
 }

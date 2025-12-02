@@ -1,10 +1,12 @@
 package ifpr.edu.br.model;
 
 import java.util.Scanner;
-import ifpr.edu.br.controllers.UsuarioController;
-import ifpr.edu.br.controllers.PessoaController;
-import ifpr.edu.br.controllers.TreinadorController;
+
 import ifpr.edu.br.controllers.AlunoController;
+import ifpr.edu.br.controllers.PessoaController;
+import ifpr.edu.br.controllers.PlanoTreinoController;
+import ifpr.edu.br.controllers.TreinadorController;
+import ifpr.edu.br.controllers.UsuarioController;
 
 public class TelaAluno {
 
@@ -13,6 +15,7 @@ public class TelaAluno {
     static PessoaController pessoaController = new PessoaController();
     static AlunoController alunoController = new AlunoController();
     static TreinadorController treinadorController = new TreinadorController();
+    static PlanoTreinoController planoTreinoController = new PlanoTreinoController();
 
     public void exibirTela(Usuario usuario) {
         while (true) {
@@ -22,7 +25,8 @@ public class TelaAluno {
             System.out.println("Escolha o que deseja fazer:");
             System.out.println("1 - Ver Perfil");
             System.out.println("2 - Alterar Perfil");
-            System.out.println("3 - Ver Perfil do Treinador");
+            System.out.println("3 - Ver plano de treino");
+            System.out.println("4 - Ver Perfil do Treinador");
             System.out.println("0 - Sair");
             switch (lerEscolha()) {
                 case 0:
@@ -34,6 +38,8 @@ public class TelaAluno {
                     alterarPerfil(usuario);
                     break;
                 case 3:
+
+                case 4:
                     verPerfilTreinador(usuario);
                     break;
                 default:
@@ -215,6 +221,14 @@ public class TelaAluno {
             System.out.println("Pressione qualquer tecla para voltar...");
             SC.nextLine();
         }
+    }
+
+    private void verPlanoTreino(Usuario usuario) {
+        limparTerminal();
+        System.out.println("=== Plano de treino ===");
+        Plano_treino plano_treino = new Plano_treino();
+        plano_treino = planoTreinoController.buscarPlanoTreinoAtivo(usuario.getPessoa().getId());
+
     }
 
     private void verPerfilTreinador(Usuario usuario) {

@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import ifpr.edu.br.controllers.AlunoController;
+import ifpr.edu.br.controllers.TreinadorController;
 import ifpr.edu.br.model.Plano_treino;
-import ifpr.edu.br.controllers.*;
 
 public class Plano_TreinoDAO {
     public int salvarPlano_treino(Plano_treino plano_treino) {

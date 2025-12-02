@@ -3,16 +3,17 @@ package ifpr.edu.br.controllers;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import ifpr.edu.br.model.dao.TreinadorDAO;
-import ifpr.edu.br.model.dao.UsuarioDAO;
+import ifpr.edu.br.model.Aluno;
+import ifpr.edu.br.model.Pessoa;
 import ifpr.edu.br.model.Treinador;
 import ifpr.edu.br.model.Usuario;
-import ifpr.edu.br.model.Pessoa;
-import ifpr.edu.br.model.Aluno;
+import ifpr.edu.br.model.dao.TreinadorDAO;
+import ifpr.edu.br.model.dao.UsuarioDAO;
 
 public class TreinadorController {
 
     public static final String USER_TREINADOR = "TREINADOR";
+    static UsuarioController usuarioController = new UsuarioController();
 
     public void cadastrarTreinador(String nome, String telefone, LocalDate data_nasc, String cref, String email, String senha, String tipo_usuario) {
         TreinadorDAO treinadorDAO = new TreinadorDAO();
@@ -51,7 +52,7 @@ public class TreinadorController {
             System.out.println("Nenhum aluno encontrado.");
         } else {
             for (Pessoa aluno : alunos) {
-                System.out.println("ID: " + aluno.getId() + ", Nome: " + aluno.getNome() + ", Email: " + aluno.getTelefone());
+                System.out.println("ID: " + aluno.getId() + ", Nome: " + aluno.getNome() + ", Email: " + usuarioController.buscarPorPessoaId(aluno.getId()).getEmail());
             }
         }
     }

@@ -5,35 +5,35 @@ O sistema é voltado para simular o funcionamento de uma assessoria de corridas,
 Funcionalidades:
 Para Treinadores:
 
-Listar alunos da assessoria;
+- Listar alunos da assessoria;
 
-Criar, alterar e desativar planos de treino para corrida;
+- Criar, alterar e desativar planos de treino para corrida;
 
-Adicionar treinos aos planos, escolhendo dias da semana;
+- Adicionar treinos aos planos, escolhendo dias da semana;
 
-Visualizar o progresso dos alunos, incluindo histórico de treinos concluídos.
+- Visualizar o progresso dos alunos, incluindo histórico de treinos concluídos.
 
 Para Alunos:
 
-Visualizar e alterar perfil pessoal;
+- Visualizar e alterar perfil pessoal;
 
-Consultar o plano de treino ativo;
+- Consultar o plano de treino ativo;
 
-Registrar treinos concluídos;
+- Registrar treinos concluídos;
 
-Acompanhar progresso do plano (treinos concluídos, treinos restantes e semanas restantes).
+- Acompanhar progresso do plano (treinos concluídos, treinos restantes e semanas restantes).
 
 Tecnologias:
 
-Java 17
+- Java 17
 
-JDBC para conexão com o banco de dados
+- JDBC para conexão com o banco de dados
 
-MySQL como SGBD
+- MySQL como SGBD
 
-POO (Programação Orientada a Objetos) aplicada na modelagem de alunos, treinadores, planos e treinos.
+- POO (Programação Orientada a Objetos) aplicada na modelagem de alunos, treinadores, planos e treinos.
 
-Banco de Dados
+- Banco de Dados
 
 O banco contém as seguintes tabelas principais:
 

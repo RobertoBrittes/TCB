@@ -36,12 +36,13 @@ public class Main {
                     return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
+                    Thread.sleep(2000);
                     break;
             }
         }
     }
 
-    public static void efetuarCadastro() {
+    public static void efetuarCadastro() throws InterruptedException {
         limparTerminal();
         System.out.println("=== Cadastro de Usuário ===");
         System.out.print("Digite seu nome: ");
@@ -89,7 +90,7 @@ public class Main {
                 String senha = SC.nextLine();
                 usuarioLogado = loginController.efetuarLogin(email, senha);
                 Thread.sleep(2000);
-                if(usuarioLogado.getTipo_usuario().equalsIgnoreCase(AlunoController.USER_ALUNO)) {
+                if (usuarioLogado.getTipo_usuario().equalsIgnoreCase(AlunoController.USER_ALUNO)) {
                     telaAluno.exibirTela(usuarioLogado);
                     break;
                 } else if (usuarioLogado.getTipo_usuario().equalsIgnoreCase(TreinadorController.USER_TREINADOR)) {
@@ -105,9 +106,9 @@ public class Main {
 
     public static void imprimirCabecalho() {
         System.out.println("   _________________  ____ _   _____       ___  __  ___  __\r\n" + //
-                        "  / __/ __/_  __/ _ \\/ __ \\ | / / _ |     / _ \\/ / / / |/ /\r\n" + //
-                        " / _/_\\ \\  / / / , _/ /_/ / |/ / __ |    / , _/ /_/ /    / \r\n" + //
-                        "/___/___/ /_/ /_/|_|\\____/|___/_/ |_|   /_/|_|\\____/_/|_/  \r\n" );
+                "  / __/ __/_  __/ _ \\/ __ \\ | / / _ |     / _ \\/ / / / |/ /\r\n" + //
+                " / _/_\\ \\  / / / , _/ /_/ / |/ / __ |    / , _/ /_/ /    / \r\n" + //
+                "/___/___/ /_/ /_/|_|\\____/|___/_/ |_|   /_/|_|\\____/_/|_/  \r\n");
 
         System.out.println("Olá, seja bem vindo ao Estrova Run\n");
         System.out.println("Escolha uma das opções abaixo:");
@@ -123,12 +124,20 @@ public class Main {
         System.out.print("\033\143");
     }
 
-    public static int lerEscolha() {
-        int escolha = 0;
-        do {
-            escolha = Integer.parseInt(SC.nextLine());
-        } while (escolha > 2 || escolha < 0);
-        return escolha;
+    public static int lerEscolha() throws InterruptedException {
+        while (true) {
+            try {
+                int escolha = 0;
+                do {
+                    escolha = Integer.parseInt(SC.nextLine());
+                } while (escolha > 2 || escolha < 0);
+                return escolha;
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Tente novamente.");
+                Thread.sleep(2000);
+            }
+
+        }
     }
 
 }

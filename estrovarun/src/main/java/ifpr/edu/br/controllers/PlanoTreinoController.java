@@ -84,6 +84,10 @@ public class PlanoTreinoController {
         Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
         Plano_treino plano = plano_TreinoDAO.buscarPlanoTreinoPorId(planoId);
 
+        if (plano == null) {
+            throw new RuntimeException("Plano de treino não encontrado.");
+        }
+
         if (plano.getAluno().getId() != alunoId) {
             throw new RuntimeException("Acesso negado ao plano de treino.");
         }

@@ -75,7 +75,7 @@ public class TelaTreinador {
         SC.nextLine();
     }
 
-    private static void alterarPerfil(Usuario usuario) {
+    private static void alterarPerfil(Usuario usuario) throws InterruptedException {
         limparTerminal();
         System.out.println("=== Alterar Perfil ===");
         System.out.println("1 - Alterar Senha");
@@ -318,7 +318,7 @@ public class TelaTreinador {
         }
     }
 
-    private static TreinoTemPlano escolherTreinoExistente(Plano_treino plano, String diaSemana) {
+    private static TreinoTemPlano escolherTreinoExistente(Plano_treino plano, String diaSemana) throws InterruptedException {
         TreinoController treinoController = new TreinoController();
         TreinoTemPlano treinoPlano = new TreinoTemPlano();
         treinoController.listarTreinosProntos();
@@ -331,7 +331,7 @@ public class TelaTreinador {
         return treinoPlano;
     }
 
-    private static Treino criarNovoTreino() {
+    private static Treino criarNovoTreino() throws InterruptedException {
         Treino novo = new Treino();
 
         System.out.print("Nome do Treino: ");
@@ -382,7 +382,7 @@ public class TelaTreinador {
         return novo;
     }
 
-    private static String escolherDiaSemana() {
+    private static String escolherDiaSemana() throws InterruptedException  {
         switch (lerEscolha()) {
             case 1:
                 return "domingo";
@@ -870,11 +870,19 @@ public class TelaTreinador {
         System.out.print("\033\143");
     }
 
-    private static int lerEscolha() {
-        int escolha;
-        do {
-            escolha = Integer.parseInt(SC.nextLine());
-        } while (escolha < 0 || escolha > 6);
-        return escolha;
+    public static int lerEscolha() throws InterruptedException {
+        while (true) {
+            try {
+                int escolha = 0;
+                do {
+                    escolha = Integer.parseInt(SC.nextLine());
+                } while (escolha > 2 || escolha < 0);
+                return escolha;
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Tente novamente.");
+                Thread.sleep(2000);
+            }
+
+        }
     }
 }

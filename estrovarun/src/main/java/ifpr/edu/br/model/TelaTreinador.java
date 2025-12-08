@@ -568,6 +568,7 @@ public class TelaTreinador {
             System.out.println("2 - Editar Objetivo");
             System.out.println("3 - Editar Descrição");
             System.out.println("4 - Editar Treinos");
+            System.out.println("0 - Sair");
 
             switch (lerEscolha()) {
                 case 1:
@@ -585,6 +586,8 @@ public class TelaTreinador {
                 case 4:
                     editarTreinos(plano);
                     break;
+                case 0:
+                    return;
                 default:
                     System.out.println("Escolha inválida.");
                     Thread.sleep(2000);

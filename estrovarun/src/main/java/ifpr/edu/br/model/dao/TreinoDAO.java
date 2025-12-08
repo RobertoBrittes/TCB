@@ -10,10 +10,10 @@ import java.sql.Statement;
 
 public class TreinoDAO {
     public int salvarTreino(Treino treino) {
-        Connection con = ConnectionFactory.getConnection();
         String sql = "INSERT INTO treino (nome, duracao, tipo, descricao, isTreinoPronto) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, treino.getNome());
             ps.setString(2, treino.getDuracao());
             ps.setString(3, treino.getTipo_treino());

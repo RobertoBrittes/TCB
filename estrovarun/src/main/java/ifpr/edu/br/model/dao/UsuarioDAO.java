@@ -12,9 +12,8 @@ public class UsuarioDAO {
 
     public void salvar(Usuario usuario) {
         String sqlUsuario = "INSERT INTO usuario (email, senha, tipo_usuario, pessoa_id) VALUES(?, ?, ?, ?)";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement psUsuario = con.prepareStatement(sqlUsuario);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement psUsuario = con.prepareStatement(sqlUsuario)){;
             psUsuario.setString(1, usuario.getEmail());
             psUsuario.setString(2, usuario.getSenha());
             psUsuario.setString(3, usuario.getTipo_usuario());
@@ -27,9 +26,8 @@ public class UsuarioDAO {
 
     public Usuario fazerLogin(String email, String senha) {
         String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, email);
             ps.setString(2, senha);
 
@@ -60,9 +58,8 @@ public class UsuarioDAO {
 
     public void atualizarSenha(int usuarioId, String novaSenha) {
         String sql = "UPDATE usuario SET senha = ? WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, novaSenha);
             ps.setInt(2, usuarioId);
             ps.executeUpdate();
@@ -73,9 +70,8 @@ public class UsuarioDAO {
 
     public void atualizarEmail(int usuarioId, String novoEmail) {
         String sql = "UPDATE usuario SET email = ? WHERE id =?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, novoEmail);
             ps.setInt(2, usuarioId);
             ps.executeUpdate();
@@ -86,9 +82,8 @@ public class UsuarioDAO {
 
     public Usuario buscarPorId(int usuarioId) {
         String sql = "SELECT * FROM usuario WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, usuarioId);
             ResultSet rs = ps.executeQuery();
             Usuario usuario = new Usuario();
@@ -117,9 +112,8 @@ public class UsuarioDAO {
 
     public Usuario buscarPorEmail(String email) {
         String sql = "SELECT * FROM usuario WHERE email = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             Usuario usuario = null;
@@ -152,9 +146,8 @@ public class UsuarioDAO {
 
     public Usuario buscarPorPessoaId(int pessoaId) {
         String sql = "SELECT * FROM usuario WHERE pessoa_id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, pessoaId);
             ResultSet rs = ps.executeQuery();
             Usuario usuario = null;

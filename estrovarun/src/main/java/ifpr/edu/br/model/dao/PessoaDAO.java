@@ -10,9 +10,8 @@ import ifpr.edu.br.model.Pessoa;
 public class PessoaDAO {
     public int salvar(Pessoa pessoa) {
         String sqlPessoa = "INSERT INTO pessoa (nome, telefone, data_nasc) VALUES (?, ?, ?)";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement psPessoa = con.prepareStatement(sqlPessoa, PreparedStatement.RETURN_GENERATED_KEYS);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement psPessoa = con.prepareStatement(sqlPessoa, PreparedStatement.RETURN_GENERATED_KEYS)) {
             psPessoa.setString(1, pessoa.getNome());
             psPessoa.setString(2, pessoa.getTelefone());
             psPessoa.setDate(3, java.sql.Date.valueOf(pessoa.getDataNasc()));
@@ -30,9 +29,8 @@ public class PessoaDAO {
 
     public void atualizarTelefone(int pessoaId, String novoTelefone) {
         String sql = "UPDATE pessoa SET telefone = ? WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, novoTelefone);
             ps.setInt(2, pessoaId);
             ps.executeUpdate();
@@ -43,9 +41,8 @@ public class PessoaDAO {
 
     public void atualizarNome(int pessoaId, String novoNome) {
         String sql = "UPDATE pessoa SET nome = ? WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setString(1, novoNome);
             ps.setInt(2, pessoaId);
             ps.executeUpdate();
@@ -56,9 +53,8 @@ public class PessoaDAO {
 
     public Pessoa buscarPorId(int id) {
         String sql = "SELECT * FROM pessoa WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             

@@ -41,9 +41,8 @@ public class Plano_TreinoDAO {
 
     public void desativarPlanoTreino(int planoTreinoId) {
         String sql = "UPDATE plano_treino SET is_ativo = FALSE, dataFim = ? WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
             ps.setInt(2, planoTreinoId);
             ps.executeUpdate();
@@ -56,9 +55,8 @@ public class Plano_TreinoDAO {
         AlunoController alunoController = new AlunoController();
         TreinadorController treinadorController = new TreinadorController();
         String sql = "SELECT * FROM plano_treino WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
@@ -89,9 +87,8 @@ public class Plano_TreinoDAO {
         TreinadorController treinadorController = new TreinadorController();
         ArrayList<Plano_treino> planos = new ArrayList<>();
         String sql = "SELECT * FROM plano_treino WHERE aluno_id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
@@ -122,9 +119,8 @@ public class Plano_TreinoDAO {
         TreinadorController treinadorController = new TreinadorController();
         ArrayList<Plano_treino> planos = new ArrayList<>();
         String sql = "SELECT * FROM plano_treino WHERE aluno_id = ? AND is_ativo = TRUE";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
@@ -152,9 +148,8 @@ public class Plano_TreinoDAO {
 
     public Plano_treino buscarPlanoTreinoAtivo(int alunoId) {
         String sql = "SELECT * FROM plano_treino WHERE aluno_id = ? AND is_ativo = TRUE";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setInt(1, alunoId);
             ResultSet rs = ps.executeQuery();
 
@@ -179,9 +174,8 @@ public class Plano_TreinoDAO {
 
     public void atualizarNome(int planoId, String novoNome) {
         String sql = "UPDATE plano_treino SET nome = ? WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setString(1, novoNome);
             ps.setInt(2, planoId);
             ps.executeUpdate();
@@ -192,9 +186,8 @@ public class Plano_TreinoDAO {
 
     public void atualizarObjetivo(int planoId, String novoObjetivo) {
         String sql = "UPDATE plano_treino SET objetivo = ? WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setString(1, novoObjetivo);
             ps.setInt(2, planoId);
             ps.executeUpdate();
@@ -205,9 +198,8 @@ public class Plano_TreinoDAO {
 
     public void atualizarDescricao(int planoId, String novoDescricao) {
         String sql = "UPDATE plano_treino SET descricao = ? WHERE id = ?";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
             ps.setString(1, novoDescricao);
             ps.setInt(2, planoId);
             ps.executeUpdate();

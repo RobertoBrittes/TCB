@@ -99,7 +99,8 @@ public class Main {
                 }
             } catch (Exception e) {
                 System.out.println("Erro ao efetuar login: " + e.getMessage());
-                Thread.sleep(2000);
+                System.out.println("Pressione qualquer tecla para voltar...");
+                SC.nextLine();
             }
         }
     }

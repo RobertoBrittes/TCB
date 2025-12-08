@@ -876,7 +876,7 @@ public class TelaTreinador {
                 int escolha = 0;
                 do {
                     escolha = Integer.parseInt(SC.nextLine());
-                } while (escolha > 2 || escolha < 0);
+                } while (escolha > 7 || escolha < 0);
                 return escolha;
             } catch (Exception e) {
                 System.out.println("Entrada inválida. Tente novamente.");

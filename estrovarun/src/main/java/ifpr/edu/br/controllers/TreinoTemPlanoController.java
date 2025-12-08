@@ -27,4 +27,22 @@ public class TreinoTemPlanoController {
         TreinoTemPlanoDAO treinoTemPlanoDAO = new TreinoTemPlanoDAO();
         return treinoTemPlanoDAO.listarTreinosDoPlano(planoId);
     }
+
+    public TreinoTemPlano buscarPlanoTreinoPorId(int planoId) {
+        if (planoId <= 0) {
+            throw new RuntimeException("ID inválido do treino do plano.");
+        }
+
+        TreinoTemPlanoDAO treinoTemPlanoDAO = new TreinoTemPlanoDAO();
+        return treinoTemPlanoDAO.buscarPorId(planoId);
+    }
+
+    public void atualizarDiaSemana(int ttpId, String novoDiaSemana) {
+        if (novoDiaSemana == null || novoDiaSemana.isBlank()) {
+            throw new RuntimeException("O dia da semana não pode ser nulo ou vazio.");
+        }
+
+        TreinoTemPlanoDAO treinoTemPlanoDAO = new TreinoTemPlanoDAO();
+        treinoTemPlanoDAO.atualizarDiaSemana(ttpId, novoDiaSemana);
+    }
 }

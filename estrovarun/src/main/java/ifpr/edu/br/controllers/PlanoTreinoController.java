@@ -1,6 +1,7 @@
 package ifpr.edu.br.controllers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import ifpr.edu.br.model.Aluno;
 import ifpr.edu.br.model.Plano_treino;
@@ -33,9 +34,60 @@ public class PlanoTreinoController {
         Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
         return plano_TreinoDAO.buscarPlanoTreinoPorId(id);
     }
+
+    public ArrayList<Plano_treino> buscarPlanoTreinoPorAlunoId(int alunoId) {
+        Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
+        return plano_TreinoDAO.buscarPlanoTreinoPorAlunoId(alunoId);
+    }
     
     public Plano_treino buscarPlanoTreinoAtivo(int alunoId) {
         Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
         return plano_TreinoDAO.buscarPlanoTreinoAtivo(alunoId);
+    }
+
+    public void atualizarNome(int planoId, String novoNome) {
+        if (novoNome.isBlank() || novoNome == null) {
+            throw new RuntimeException("O nome não pode ser em branco.");
+        }
+        Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
+        plano_TreinoDAO.atualizarNome(planoId, novoNome);
+    }
+
+    public void atualizarObjetivo(int planoId, String novoObjetivo) {
+        if (novoObjetivo.isBlank() || novoObjetivo == null) {
+            throw new RuntimeException("O objetivo não pode ser em branco.");
+        }
+        Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
+        plano_TreinoDAO.atualizarNome(planoId, novoObjetivo);
+    }
+
+    public void atualizarDescricao(int planoId, String novaDescricao) {
+        Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
+        plano_TreinoDAO.atualizarNome(planoId, novaDescricao);
+    }
+
+    public void desativarPlanoTreino(int planoId) {
+        if (planoId == 0) {
+            throw new RuntimeException("Id invalido.");
+        }
+
+        Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
+        plano_TreinoDAO.desativarPlanoTreino(planoId);
+    }
+
+    public ArrayList<Plano_treino> buscarHistoricoPlanoTreinoPorAlunoId(int alunoId) {
+        Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
+        return plano_TreinoDAO.buscarHistoricoPlanoTreinoPorAlunoId(alunoId);
+    }
+
+    public Plano_treino verPlanoTreino(int planoId, int alunoId) {
+        Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
+        Plano_treino plano = plano_TreinoDAO.buscarPlanoTreinoPorId(planoId);
+
+        if (plano.getAluno().getId() != alunoId) {
+            throw new RuntimeException("Acesso negado ao plano de treino.");
+        }
+
+        return plano;
     }
 }

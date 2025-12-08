@@ -1,6 +1,7 @@
 package ifpr.edu.br.controllers;
 
 import ifpr.edu.br.model.Usuario;
+import ifpr.edu.br.model.Treinador;
 import ifpr.edu.br.model.dao.AlunoDAO;
 import ifpr.edu.br.model.dao.UsuarioDAO;
 import java.time.LocalDate;
@@ -49,5 +50,10 @@ public class AlunoController {
         }
 
         return aluno;
+    }
+
+    public Treinador returnTreinador(int alunoId) {
+        Aluno aluno = new AlunoController().buscarPorId(alunoId);
+        return new TreinadorController().buscarPorId(aluno.getTreinador().getId());
     }
 }

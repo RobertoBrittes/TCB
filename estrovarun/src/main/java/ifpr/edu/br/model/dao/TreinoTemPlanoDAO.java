@@ -62,6 +62,7 @@ public class TreinoTemPlanoDAO {
 
             while (rs.next()) {
                 TreinoTemPlano treinoPlano = new TreinoTemPlano();
+                treinoPlano.setId(rs.getInt("id"));
                 treinoPlano.setTreino(treinoController.buscarTreinoPorId(rs.getInt("treino_id")));
                 treinoPlano.setPlano_treino(planoTreinoController.buscarPlanoTreinoPorId(rs.getInt("plano_id")));
                 treinoPlano.setDiaSemana(rs.getString("dia_semana"));
@@ -70,6 +71,40 @@ public class TreinoTemPlanoDAO {
             return treinosNoPlano;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao listar treinos do plano: " + e.getMessage());
+        }
+    }
+
+    public TreinoTemPlano buscarPorId(int id) {
+        TreinoTemPlano treinoPlano = new TreinoTemPlano();
+        String sql = "SELECT * FROM plano_treino_tem_treino WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                treinoPlano.setId(rs.getInt("id"));
+                treinoPlano.setTreino(new TreinoController().buscarTreinoPorId(rs.getInt("treino_id")));
+                treinoPlano.setPlano_treino(new PlanoTreinoController().buscarPlanoTreinoPorId(rs.getInt("plano_id")));
+                treinoPlano.setDiaSemana(rs.getString("dia_semana"));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar treino no plano por id: " + e.getMessage());
+        }
+        return treinoPlano;
+    }
+
+    public void atualizarDiaSemana(int id, String novoDiaSemana) {
+        String sql = "UPDATE plano_treino_tem_treino SET dia_semana = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novoDiaSemana);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar dia da semana: " + e.getMessage());
         }
     }
 }

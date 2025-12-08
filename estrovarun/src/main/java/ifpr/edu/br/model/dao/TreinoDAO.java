@@ -80,4 +80,56 @@ public class TreinoDAO {
             throw new RuntimeException("Erro ao listar treinos prontos: " + e.getMessage());
         }
     }
+
+    public void atualizarNome(int treinoId, String novoNome) {
+        String sql = "UPDATE treino SET nome = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novoNome);
+            ps.setInt(2, treinoId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar nome do treino: " + e.getMessage());
+        }
+    }
+
+    public void atualizarDuracao(int treinoId, String novaDuracao) {
+        String sql = "UPDATE treino SET duracao = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novaDuracao);
+            ps.setInt(2, treinoId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar duracao do treino: " + e.getMessage());
+        }
+    }
+
+    public void atualizarTipo(int treinoId, String novoTipo) {
+        String sql = "UPDATE treino SET tipo = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novoTipo);
+            ps.setInt(2, treinoId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar tipo do treino: " + e.getMessage());
+        }
+    }
+
+    public void atualizarDescricao(int treinoId, String novaDescricao) {
+        String sql = "UPDATE treino SET descricao = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novaDescricao);
+            ps.setInt(2, treinoId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar descricao do treino: " + e.getMessage());
+        }
+    }
 }

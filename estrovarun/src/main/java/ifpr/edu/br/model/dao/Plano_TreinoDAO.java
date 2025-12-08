@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import ifpr.edu.br.controllers.AlunoController;
 import ifpr.edu.br.controllers.TreinadorController;
@@ -38,11 +40,12 @@ public class Plano_TreinoDAO {
     }
 
     public void desativarPlanoTreino(int planoTreinoId) {
-        String sql = "UPDATE plano_treino SET is_ativo = FALSE WHERE id = ?";
+        String sql = "UPDATE plano_treino SET is_ativo = FALSE, dataFim = ? WHERE id = ?";
         Connection con = ConnectionFactory.getConnection();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, planoTreinoId);
+            ps.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+            ps.setInt(2, planoTreinoId);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao desativar plano de treino: " + e.getMessage());
@@ -81,6 +84,72 @@ public class Plano_TreinoDAO {
         }
     }
 
+    public ArrayList<Plano_treino> buscarHistoricoPlanoTreinoPorAlunoId(int id) {
+        AlunoController alunoController = new AlunoController();
+        TreinadorController treinadorController = new TreinadorController();
+        ArrayList<Plano_treino> planos = new ArrayList<>();
+        String sql = "SELECT * FROM plano_treino WHERE aluno_id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Plano_treino plano = new Plano_treino();
+                plano.setIdplano_treino(rs.getInt("id"));
+                plano.setNome(rs.getString("nome"));
+                plano.setObjetivo(rs.getString("objetivo"));
+                plano.setDescricao(rs.getString("descricao"));
+                plano.setDataInicio(rs.getObject("dataInicio", java.time.LocalDate.class));
+                plano.setDataFim(rs.getObject("dataFim", java.time.LocalDate.class));
+                plano.setDuracao_plano(rs.getInt("duracao_plano"));
+                plano.setQtd_treino_semanal(rs.getInt("qtd_treino_semanal"));
+                plano.setAtivo(rs.getBoolean("is_ativo"));
+                plano.setAluno(alunoController.buscarPorId(rs.getInt("aluno_id")));
+                plano.setTreinador(treinadorController.buscarPorId(rs.getInt("treinador_id")));
+                planos.add(plano);
+            }
+            return planos;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar plano de treino por ID: " + e.getMessage());
+        }
+    }
+
+    public ArrayList<Plano_treino> buscarPlanoTreinoPorAlunoId(int id) {
+        AlunoController alunoController = new AlunoController();
+        TreinadorController treinadorController = new TreinadorController();
+        ArrayList<Plano_treino> planos = new ArrayList<>();
+        String sql = "SELECT * FROM plano_treino WHERE aluno_id = ? AND is_ativo = TRUE";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Plano_treino plano = new Plano_treino();
+                plano.setIdplano_treino(rs.getInt("id"));
+                plano.setNome(rs.getString("nome"));
+                plano.setObjetivo(rs.getString("objetivo"));
+                plano.setDescricao(rs.getString("descricao"));
+                plano.setDataInicio(rs.getObject("dataInicio", java.time.LocalDate.class));
+                plano.setDataFim(rs.getObject("dataFim", java.time.LocalDate.class));
+                plano.setDuracao_plano(rs.getInt("duracao_plano"));
+                plano.setQtd_treino_semanal(rs.getInt("qtd_treino_semanal"));
+                plano.setAtivo(rs.getBoolean("is_ativo"));
+                plano.setAluno(alunoController.buscarPorId(rs.getInt("aluno_id")));
+                plano.setTreinador(treinadorController.buscarPorId(rs.getInt("treinador_id")));
+                planos.add(plano);
+            }
+            return planos;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar plano de treino por ID: " + e.getMessage());
+        }
+    }
+
     public Plano_treino buscarPlanoTreinoAtivo(int alunoId) {
         String sql = "SELECT * FROM plano_treino WHERE aluno_id = ? AND is_ativo = TRUE";
         Connection con = ConnectionFactory.getConnection();
@@ -107,4 +176,44 @@ public class Plano_TreinoDAO {
             throw new RuntimeException("Erro ao visualizar plano de treino ativo: " + e.getMessage());
         }
     }
+
+    public void atualizarNome(int planoId, String novoNome) {
+        String sql = "UPDATE plano_treino SET nome = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novoNome);
+            ps.setInt(2, planoId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar nome.");
+        }
+    }
+
+    public void atualizarObjetivo(int planoId, String novoObjetivo) {
+        String sql = "UPDATE plano_treino SET objetivo = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novoObjetivo);
+            ps.setInt(2, planoId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar objetivo.");
+        }
+    }
+
+    public void atualizarDescricao(int planoId, String novoDescricao) {
+        String sql = "UPDATE plano_treino SET descricao = ? WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, novoDescricao);
+            ps.setInt(2, planoId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar nome.");
+        }
+    }
+
 }

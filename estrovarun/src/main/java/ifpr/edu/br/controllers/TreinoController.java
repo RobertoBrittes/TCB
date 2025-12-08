@@ -19,6 +19,7 @@ public class TreinoController {
             System.out.println("ID: " + treino.getIdTreino() + ", Nome: " + treino.getNome());
             System.out.println("Tipo de Treino: " + treino.getTipo_treino());
             System.out.println("Descrição: " + treino.getDescricao());
+            System.out.println("---------------------------------------------------------------");
             System.out.println();
         }
     }
@@ -30,5 +31,33 @@ public class TreinoController {
 
         TreinoDAO treinoDAO = new TreinoDAO();
         return treinoDAO.salvarTreino(treino);
+    }
+
+    public void atualizarNomeDoTreino(int treinoId, String novoNome) {
+        if (novoNome == null || novoNome.isBlank()) {
+            throw new RuntimeException("O nome do treino não pode ser nulo ou vazio.");
+        }
+
+        TreinoDAO treinoDAO = new TreinoDAO();
+        treinoDAO.atualizarNome(treinoId, novoNome);
+    }
+
+    public void atualizarDuracao(int treinoId, String novaDuracao) {
+        if (novaDuracao == null || novaDuracao.isBlank()) {
+            throw new RuntimeException("A duração do treino não pode ser nula ou vazia.");
+        }
+
+        TreinoDAO treinoDAO = new TreinoDAO();
+        treinoDAO.atualizarDuracao(treinoId, novaDuracao);
+    }
+
+    public void atualizarTipo(int treinoId, String novoTipo) {
+        TreinoDAO treinoDAO = new TreinoDAO();
+        treinoDAO.atualizarDuracao(treinoId, novoTipo);
+    }
+
+    public void atualizarDescricao(int treinoId, String novaDescricao) {
+        TreinoDAO treinoDAO = new TreinoDAO();
+        treinoDAO.atualizarDescricao(treinoId, novaDescricao);
     }
 }

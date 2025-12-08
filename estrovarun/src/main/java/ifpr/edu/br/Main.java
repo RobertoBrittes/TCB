@@ -33,6 +33,9 @@ public class Main {
                     break;
                 case 0:
                     System.out.println("Saindo...");
+                    return;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
                     break;
             }
         }
@@ -79,6 +82,7 @@ public class Main {
             limparTerminal();
             Usuario usuarioLogado = null;
             try {
+                System.out.println("=== Login do Usuario ===");
                 System.out.print("Digite seu email: ");
                 String email = SC.nextLine();
                 System.out.print("Digite sua senha: ");
@@ -109,6 +113,7 @@ public class Main {
         System.out.println("Escolha uma das opções abaixo:");
         System.out.println("1 - Cadastrar");
         System.out.println("2 - Login");
+        System.out.println("0 - Sair");
     }
 
     public static void limparTerminal() {

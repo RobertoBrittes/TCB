@@ -1,6 +1,7 @@
 package ifpr.edu.br.model;
 
 public class TreinoTemPlano {
+    private int id;
     private Treino treino;
     private Plano_treino plano_treino;
     private String diaSemana;
@@ -30,6 +31,14 @@ public class TreinoTemPlano {
 
     public void setDiaSemana(String diaSemana) {
         this.diaSemana = diaSemana;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     

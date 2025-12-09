@@ -12,10 +12,9 @@ public class TreinoConcluidoDAO {
 
     public void registrarConclusao(int alunoId, int planoId) {
         String sql = "INSERT INTO treino_concluido (aluno_id, plano_id, data_conclusao) VALUES (?, ?, NOW())";
-
-        try (Connection con = ConnectionFactory.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, alunoId);
             ps.setInt(2, planoId);
             ps.executeUpdate();
@@ -28,9 +27,9 @@ public class TreinoConcluidoDAO {
     public int contarConcluidos(int alunoId, int planoId) {
         String sql = "SELECT COUNT(*) FROM treino_concluido WHERE aluno_id = ? AND plano_id = ?";
 
-        try (Connection con = ConnectionFactory.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
+        Connection con = ConnectionFactory.getConnection();
+        try  {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, alunoId);
             ps.setInt(2, planoId);
             ResultSet rs = ps.executeQuery();
@@ -44,13 +43,13 @@ public class TreinoConcluidoDAO {
     }
 
     public List<TreinoConcluido> listar(int alunoId, int planoId) {
-        String sql = "SELECT * FROM treino_concluido WHERE aluno_id = ? AND plano_id = ? ORDER BY data_conclusao";
+        String sql = "SELECT * FROM treino_concluido WHERE aluno_id = ? AND plano_id = ? order by data_conclusao";
 
         List<TreinoConcluido> lista = new ArrayList<>();
 
-        try (Connection con = ConnectionFactory.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
+        Connection con = ConnectionFactory.getConnection();
+        try  {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, alunoId);
             ps.setInt(2, planoId);
             ResultSet rs = ps.executeQuery();

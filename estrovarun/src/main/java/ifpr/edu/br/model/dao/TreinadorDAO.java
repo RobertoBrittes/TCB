@@ -16,8 +16,9 @@ public class TreinadorDAO {
         treinador.setId(idPessoa);
 
         String sqlTreinador = "INSERT INTO treinador (id, cref) VALUES(?, ?)";
-        try (Connection con = ConnectionFactory.getConnection();
-            PreparedStatement psTreinador = con.prepareStatement(sqlTreinador)){
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement psTreinador = con.prepareStatement(sqlTreinador);
             psTreinador.setInt(1, treinador.getId());
             psTreinador.setString(2, treinador.getCref());
             psTreinador.executeUpdate();
@@ -41,8 +42,9 @@ public class TreinadorDAO {
         treinador.setDataNasc(pessoa.getDataNasc());
 
         String sql = "SELECT * FROM treinador WHERE id = ?";
-        try (Connection con = ConnectionFactory.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql)){
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -57,8 +59,9 @@ public class TreinadorDAO {
 
     public Treinador buscarPorEmail(String email) {
         String sql = "SELECT * FROM pessoa WHERE email = ?";
-        try (Connection con = ConnectionFactory.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql)){
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
@@ -74,9 +77,10 @@ public class TreinadorDAO {
 
     public ArrayList<Pessoa> listarAlunos(int treinadorId) {
         String sql = "SELECT * FROM pessoa p JOIN aluno a ON p.id = a.id WHERE a.treinador_id = ?";
+        Connection con = ConnectionFactory.getConnection();
         ArrayList<Pessoa> alunos = new ArrayList<>();
-        try (Connection con = ConnectionFactory.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql)){
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, treinadorId);
             ResultSet rs = ps.executeQuery();
 
@@ -96,8 +100,9 @@ public class TreinadorDAO {
 
     public void removerAluno(int alunoId) {
         String sql = "UPDATE aluno SET treinador_id = NULL WHERE id = ?";
-        try (Connection con = ConnectionFactory.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql)){
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, alunoId);
             ps.executeUpdate();
         } catch (SQLException e) {

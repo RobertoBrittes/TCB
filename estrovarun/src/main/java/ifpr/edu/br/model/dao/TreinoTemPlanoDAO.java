@@ -12,8 +12,9 @@ import ifpr.edu.br.controllers.*;
 public class TreinoTemPlanoDAO {
     public void adicionarTreinoAoPlano(TreinoTemPlano treinoPlano) {
         String sql = "INSERT INTO plano_treino_tem_treino (treino_id, plano_id, dia_semana) VALUES (?, ?, ?)";
-        try (Connection con = ConnectionFactory.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, treinoPlano.getTreino().getIdTreino());
             ps.setInt(2, treinoPlano.getPlano_treino().getIdplano_treino());
             ps.setString(3, treinoPlano.getDiaSemana());
@@ -28,8 +29,9 @@ public class TreinoTemPlanoDAO {
         TreinoController treinoController = new TreinoController();
         PlanoTreinoController planoTreinoController = new PlanoTreinoController();
         String sql = "SELECT * FROM plano_treino_tem_treino WHERE dia_semana = ? AND plano_id = ?";
-        try (Connection con = ConnectionFactory.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, diaSemana);
             ps.setInt(2, planoId);
             ResultSet rs = ps.executeQuery();
@@ -51,8 +53,9 @@ public class TreinoTemPlanoDAO {
         TreinoController treinoController = new TreinoController();
         PlanoTreinoController planoTreinoController = new PlanoTreinoController();
         String sql = "SELECT * FROM plano_treino_tem_treino WHERE plano_id = ?";
+        Connection con = ConnectionFactory.getConnection();
         ArrayList<TreinoTemPlano> treinosNoPlano = new ArrayList<>();
-        try {Connection con = ConnectionFactory.getConnection();
+        try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, planoId);
             ResultSet rs = ps.executeQuery();
@@ -74,8 +77,9 @@ public class TreinoTemPlanoDAO {
     public TreinoTemPlano buscarPorId(int id) {
         TreinoTemPlano treinoPlano = new TreinoTemPlano();
         String sql = "SELECT * FROM plano_treino_tem_treino WHERE id = ?";
-        try (Connection con = ConnectionFactory.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -93,8 +97,9 @@ public class TreinoTemPlanoDAO {
 
     public void atualizarDiaSemana(int id, String novoDiaSemana) {
         String sql = "UPDATE plano_treino_tem_treino SET dia_semana = ? WHERE id = ?";
-        try (Connection con = ConnectionFactory.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, novoDiaSemana);
             ps.setInt(2, id);
             ps.executeUpdate();

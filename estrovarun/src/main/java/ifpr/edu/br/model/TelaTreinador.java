@@ -2,7 +2,6 @@ package ifpr.edu.br.model;
 
 import java.time.LocalDate;
 import java.util.Scanner;
-
 import ifpr.edu.br.controllers.UsuarioController;
 import ifpr.edu.br.controllers.AlunoController;
 import ifpr.edu.br.controllers.PessoaController;
@@ -82,6 +81,7 @@ public class TelaTreinador {
         System.out.println("2 - Alterar Email");
         System.out.println("3 - Alterar Telefone");
         System.out.println("4 - Alterar Nome");
+        System.out.println("0 - Voltar");
         switch (lerEscolha()) {
             case 1:
                 alterarSenha(usuario);
@@ -449,6 +449,8 @@ public class TelaTreinador {
                 return;
             }
 
+            limparTerminal();
+            System.out.println("=== Ver Perfil do Aluno ===");
             System.out.println("Nome: " + aluno.getNome());
             System.out.println("Telefone: " + aluno.getTelefone());
             System.out.println("Data de Nascimento: " + aluno.getDataNasc());
@@ -511,7 +513,7 @@ public class TelaTreinador {
 
         plano = new PlanoTreinoController().buscarPlanoTreinoAtivo(alunoId);
         if (plano == null) {
-            System.out.println("Aluno não possui plano de treino.");
+            System.out.println("Aluno não possui plano de treino ativo.");
             System.out.println("Pressione qualquer tecla para voltar...");
             SC.nextLine();
             return;
@@ -617,6 +619,9 @@ public class TelaTreinador {
                 int ttpId = Integer.parseInt(SC.nextLine());
     
                 TreinoTemPlano ttp = new TreinoTemPlanoController().buscarPlanoTreinoPorId(ttpId);
+                if (ttp == null) {
+                    throw new RuntimeException("Treino não encontrado.");
+                }
                 Treino treino = new TreinoController().buscarTreinoPorId(ttp.getTreino().getIdTreino());
                 while (true) {
                     limparTerminal();
@@ -862,6 +867,8 @@ public class TelaTreinador {
             SC.nextLine();
         } catch (Exception e) {
             System.out.println("Erro ao ver progresso do aluno: " + e.getMessage());
+            System.out.println("Pressione qualquer tecla para voltar...");
+            SC.nextLine();
         }
 
     }

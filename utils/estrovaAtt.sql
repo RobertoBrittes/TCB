@@ -42,7 +42,7 @@ CREATE TABLE treino (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     duracao VARCHAR(45) NOT NULL,
-    tipo ENUM('longão', 'regenerativo', 'tiro', 'fartlek', 'progressivo', 'rodagem') NOT NULL,
+    tipo ENUM('longão', 'regenerativo', 'tiro', 'fartlek', 'progressivo', 'rodagem')NOT NULL,
     descricao VARCHAR(300),
     isTreinoPronto BOOLEAN NOT NULL
 );

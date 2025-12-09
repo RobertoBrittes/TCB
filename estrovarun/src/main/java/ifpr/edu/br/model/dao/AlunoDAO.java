@@ -17,9 +17,9 @@ public class AlunoDAO {
         aluno.setId(idPessoa);
         
         String sqlAluno = "INSERT INTO aluno (id) VALUES(?)";
-        try (Connection con = ConnectionFactory.getConnection();
-             PreparedStatement psAluno = con.prepareStatement(sqlAluno)) {
-
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement psAluno = con.prepareStatement(sqlAluno);
             psAluno.setInt(1, aluno.getId());
             psAluno.executeUpdate();
 
@@ -44,8 +44,9 @@ public class AlunoDAO {
         aluno.setDataNasc(pessoa.getDataNasc());
         
         String sql = "SELECT * FROM aluno WHERE id = ?";
-        try (Connection con = ConnectionFactory.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql)) {
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             
@@ -64,8 +65,9 @@ public class AlunoDAO {
 
     public void atualizarTreinador(int alunoId, int treinadorId) { 
         String sql = "UPDATE aluno SET treinador_id = ? WHERE id = ?";
-        try (Connection con = ConnectionFactory.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql)) {
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, treinadorId);
             ps.setInt(2, alunoId);
             ps.executeUpdate();
@@ -81,8 +83,9 @@ public class AlunoDAO {
                           "JOIN usuario ON usuario.pessoa_id = pessoa.id " +
                           "JOIN aluno ON aluno.id = pessoa.id " +
                           "WHERE usuario.email = ? AND usuario.senha = ?";
-        try (Connection con = ConnectionFactory.getConnection();
-            PreparedStatement ps = con.prepareStatement(sqlAluno)) {
+        Connection con = ConnectionFactory.getConnection();
+        try  {
+            PreparedStatement ps = con.prepareStatement(sqlAluno);
             ps.setString(1, email);
             ps.setString(2, senha);
 
@@ -114,6 +117,18 @@ public class AlunoDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao realizar login do aluno: " + e.getMessage());
             
+        }
+    }
+
+    public void deleteAluno(int alunoId) {
+        String sql = "DELETE FROM aluno WHERE id = ?";
+        Connection con = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql); 
+            ps.setInt(1, alunoId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar aluno.");
         }
     }
 

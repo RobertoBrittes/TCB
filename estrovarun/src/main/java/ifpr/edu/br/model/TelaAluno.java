@@ -402,10 +402,12 @@ public class TelaAluno {
             int concluidos = treinoConcluidoController.getTreinosConcluidos(aluno.getId(), plano.getIdplano_treino());
             int restantes = treinoConcluidoController.getTreinosRestantes(aluno.getId(), plano);
             int semanasRest = treinoConcluidoController.getSemanasRestantes(aluno.getId(), plano);
+            int treinosTotais = treinoConcluidoController.getTreinosTotais(plano);
 
             System.out.println("Treino concluído com sucesso!");
 
             System.out.println("\n--- Progresso ---");
+            System.out.println("Treinos totais: " + treinosTotais);
             System.out.println("Treinos concluídos: " + concluidos);
             System.out.println("Treinos restantes:  " + restantes);
             System.out.println("Semanas restantes:  " + semanasRest);

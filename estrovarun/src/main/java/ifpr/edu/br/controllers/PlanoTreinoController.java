@@ -58,12 +58,12 @@ public class PlanoTreinoController {
             throw new RuntimeException("O objetivo não pode ser em branco.");
         }
         Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
-        plano_TreinoDAO.atualizarNome(planoId, novoObjetivo);
+        plano_TreinoDAO.atualizarObjetivo(planoId, novoObjetivo);
     }
 
     public void atualizarDescricao(int planoId, String novaDescricao) {
         Plano_TreinoDAO plano_TreinoDAO = new Plano_TreinoDAO();
-        plano_TreinoDAO.atualizarNome(planoId, novaDescricao);
+        plano_TreinoDAO.atualizarDescricao(planoId, novaDescricao);
     }
 
     public void desativarPlanoTreino(int planoId) {

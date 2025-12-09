@@ -71,7 +71,7 @@ CREATE TABLE treino_concluido (
     id INT AUTO_INCREMENT PRIMARY KEY,
     aluno_id INT NOT NULL,
     plano_id INT NOT NULL,
-    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_conclusao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (aluno_id) REFERENCES aluno(id),
     FOREIGN KEY (plano_id) REFERENCES plano_treino(id)
 );
